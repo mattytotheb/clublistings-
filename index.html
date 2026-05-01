@@ -105,12 +105,10 @@
   function getCurrentWeek() {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const sunday = new Date(today);
-    sunday.setDate(today.getDate() - today.getDay());
     const week = [];
     for (let i = 0; i < 7; i++) {
-      const d = new Date(sunday);
-      d.setDate(sunday.getDate() + i);
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
       week.push(d);
     }
     return week;
