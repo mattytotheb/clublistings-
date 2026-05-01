@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Club Listings</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+  }
+  body { padding: 10px 0; }
+  .listings-container {
+    text-align: center;
+    background: #ffffff;
+    border: 5px solid #daa520;
+    padding: 0 20px 25px 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .header-img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .listings-title {
+    color: #b8860b;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 18px 0 6px 0;
+    letter-spacing: 0.5px;
+  }
+  .listings-subtitle {
+    font-size: 1.15em;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 12px auto;
+    width: 80%;
+  }
+  .featured-venues { margin: 14px 0 4px 0; }
+  .featured-venues a {
+    color: #b8860b;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: block;
+    line-height: 1.9;
+  }
+  .featured-venues a:hover { text-decoration: underline; }
+  .day-section { text-align: left; margin: 18px auto 0; max-width: 90%; }
+  .day-header {
+    color: #b8860b;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 16px 0 6px 0;
+  }
+  .event { margin: 3px 0; line-height: 1.55; }
+  .venue-name { font-weight: bold; }
+  .town { text-transform: uppercase; }
+  .status { padding: 30px; text-align: center; color: #777; }
+  .status.error { color: #b00020; }
+  .footer-stamp {
+    margin-top: 20px;
+    font-size: 0.75em;
+    color: #999;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="listings-container">
+  <img src="https://www.pixy103.com/images/LISTINGS1.jpg" alt="Club Listings" class="header-img">
+  <div class="listings-title">CLUB LISTINGS</div>
+  <div class="listings-subtitle">If you're out and about this week<br>check out what's happening at...</div>
+  <hr>
+  <div id="featured" class="featured-venues">
+    <div class="status">Loading...</div>
+  </div>
+  <div id="schedule"></div>
+  <div id="stamp" class="footer-stamp"></div>
+</div>
+
+<script>
+  // ============================================================
+  // Replace this with your GAS web app /exec URL
+  const API_URL = 'PASTE_YOUR_GAS_DEPLOYMENT_URL_HERE';
+  // ============================================================
+
+  const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function getCurrentWeek() {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const sunday = new Date(today);
+    sunday.setDate(today.getDate() - today.getDay());
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(sunday);
+      d.setDate(sunday.getDate() + i);
+      week.push(d);
+    }
+    return week;
+  }
+
+  function formatDate(d) {
+    return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function dateKey(d) {
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+
+  function parseSheetDate(val) {
+    if (!val) return null;
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function render(data) {
+    const featuredEl = document.getElementById('featured');
+    featuredEl.innerHTML = '';
+    (data.featured || []).forEach(v => {
+      if (!v.Name || !v.URL) return;
+      const a = document.createElement('a');
+      a.href = v.URL;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = v.Name;
+      featuredEl.appendChild(a);
+    });
+
+    const scheduleEl = document.getElementById('schedule');
+    scheduleEl.innerHTML = '';
+
+    const week = getCurrentWeek();
+
+    const variableByDate = {};
+    (data.thisWeek || []).forEach(ev => {
+      const d = parseSheetDate(ev.Date);
+      if (!d) return;
+      const key = dateKey(d);
+      (variableByDate[key] = variableByDate[key] || []).push(ev);
+    });
+
+    const recurringByDay = {};
+    (data.recurring || []).forEach(ev => {
+      const day = String(ev.Day || '').trim();
+      if (!day) return;
+      (recurringByDay[day] = recurringByDay[day] || []).push(ev);
+    });
+
+    let anyRendered = false;
+
+    week.forEach(d => {
+      const dayName = DAYS[d.getDay()];
+      const events = []
+        .concat(recurringByDay[dayName] || [])
+        .concat(variableByDate[dateKey(d)] || []);
+
+      if (events.length === 0) return;
+      anyRendered = true;
+
+      events.sort((a, b) =>
+        String(a.Venue || '').toLowerCase().localeCompare(String(b.Venue || '').toLowerCase())
+      );
+
+      const section = document.createElement('div');
+      section.className = 'day-section';
+
+      const header = document.createElement('div');
+      header.className = 'day-header';
+      header.textContent = formatDate(d);
+      section.appendChild(header);
+
+      events.forEach(ev => {
+        const div = document.createElement('div');
+        div.className = 'event';
+        const time = ev.Time ? ' ' + escapeHtml(ev.Time) : '';
+        div.innerHTML =
+          '<span class="venue-name">' + escapeHtml(ev.Venue || '') + '</span> ' +
+          '<span class="town">' + escapeHtml(ev.Town || '') + '</span> - ' +
+          escapeHtml(ev.Event || '') + time;
+        section.appendChild(div);
+      });
+
+      scheduleEl.appendChild(section);
+    });
+
+    if (!anyRendered) {
+      scheduleEl.innerHTML = '<div class="status">No events scheduled for this week.</div>';
+    }
+
+    const stamp = document.getElementById('stamp');
+    if (data.generatedAt) {
+      stamp.textContent = 'Updated ' + new Date(data.generatedAt).toLocaleString();
+    }
+
+    reportHeight();
+  }
+
+  function loadListings() {
+    fetch(API_URL)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        render(data);
+      })
+      .catch(err => {
+        document.getElementById('featured').innerHTML =
+          '<div class="status error">Unable to load listings: ' + escapeHtml(err.message) + '</div>';
+        document.getElementById('schedule').innerHTML = '';
+        reportHeight();
+      });
+  }
+
+  // Auto-resize iframe in parent (Joomla)
+  function reportHeight() {
+    try {
+      const h = document.documentElement.scrollHeight;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'club-listings-resize', height: h }, '*');
+      }
+    } catch (e) {}
+  }
+
+  window.addEventListener('load', () => {
+    loadListings();
+    setTimeout(reportHeight, 200);
+  });
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(reportHeight).observe(document.body);
+  }
+  window.addEventListener('resize', reportHeight);
+</script>
+
+</body>
+</html>
