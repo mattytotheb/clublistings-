@@ -248,9 +248,19 @@
   }
 
   // Auto-resize iframe in parent (Joomla)
+  // Measure only the visible content container, not the full document
+  let lastReportedHeight = 0;
+
   function reportHeight() {
     try {
-      const h = document.documentElement.scrollHeight;
+      const container = document.querySelector('.listings-container');
+      if (!container) return;
+      // Use bounding rect bottom to get the actual content edge
+      const rect = container.getBoundingClientRect();
+      const h = Math.ceil(rect.bottom + 20); // 20px breathing room
+      // Only post if height changed by more than 2px (avoids feedback loop)
+      if (Math.abs(h - lastReportedHeight) < 3) return;
+      lastReportedHeight = h;
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({ type: 'club-listings-resize', height: h }, '*');
       }
@@ -259,13 +269,9 @@
 
   window.addEventListener('load', () => {
     loadListings();
-    setTimeout(reportHeight, 200);
+    setTimeout(reportHeight, 300);
+    setTimeout(reportHeight, 800);
   });
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(reportHeight).observe(document.body);
-  }
-  window.addEventListener('resize', reportHeight);
-</script>
 
 </body>
 </html>
