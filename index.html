@@ -183,8 +183,21 @@
       if (events.length === 0) return;
       anyRendered = true;
 
-      events.sort((a, b) =>
-        String(a.Venue || '').toLowerCase().localeCompare(String(b.Venue || '').toLowerCase())
+      // Group events by Venue|Town so multiple acts at the same venue/day combine
+      const grouped = {};
+      const groupOrder = [];
+      events.forEach(ev => {
+        const key = (ev.Venue || '') + '|' + (ev.Town || '');
+        if (!grouped[key]) {
+          grouped[key] = { venue: ev.Venue || '', town: ev.Town || '', acts: [] };
+          groupOrder.push(key);
+        }
+        const time = ev.Time ? ' ' + ev.Time : '';
+        grouped[key].acts.push((ev.Event || '') + time);
+      });
+
+      groupOrder.sort((a, b) =>
+        grouped[a].venue.toLowerCase().localeCompare(grouped[b].venue.toLowerCase())
       );
 
       const section = document.createElement('div');
@@ -195,14 +208,14 @@
       header.textContent = formatDate(d);
       section.appendChild(header);
 
-      events.forEach(ev => {
+      groupOrder.forEach(key => {
+        const g = grouped[key];
         const div = document.createElement('div');
         div.className = 'event';
-        const time = ev.Time ? ' ' + escapeHtml(ev.Time) : '';
         div.innerHTML =
-          '<span class="venue-name">' + escapeHtml(ev.Venue || '') + '</span> ' +
-          '<span class="town">' + escapeHtml(ev.Town || '') + '</span> - ' +
-          escapeHtml(ev.Event || '') + time;
+          '<span class="venue-name">' + escapeHtml(g.venue) + '</span> ' +
+          '<span class="town">' + escapeHtml(g.town) + '</span> - ' +
+          g.acts.map(escapeHtml).join(' / ');
         section.appendChild(div);
       });
 
