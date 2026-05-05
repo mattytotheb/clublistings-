@@ -155,16 +155,45 @@
   }
 
   function render(data) {
-    const featuredEl = document.getElementById('featured');
+   const featuredEl = document.getElementById('featured');
     featuredEl.innerHTML = '';
+
+    const regionOrder = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
+    const grouped = {};
+
     (data.featured || []).forEach(v => {
       if (!v.Name || !v.URL) return;
-      const a = document.createElement('a');
-      a.href = v.URL;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = v.Name;
-      featuredEl.appendChild(a);
+      const region = v.Region || 'Other';
+      if (!grouped[region]) grouped[region] = [];
+      grouped[region].push(v);
+    });
+
+    const regions = regionOrder.filter(r => grouped[r]);
+    if (grouped['Other']) regions.push('Other');
+
+    regions.forEach(region => {
+      const section = document.createElement('div');
+      section.className = 'featured-region';
+
+      const header = document.createElement('div');
+      header.className = 'featured-region-header';
+      header.textContent = region;
+      section.appendChild(header);
+
+      const linksDiv = document.createElement('div');
+      linksDiv.className = 'featured-region-links';
+
+      grouped[region].forEach(v => {
+        const a = document.createElement('a');
+        a.href = v.URL;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = v.Name;
+        linksDiv.appendChild(a);
+      });
+
+      section.appendChild(linksDiv);
+      featuredEl.appendChild(section);
     });
 
     const scheduleEl = document.getElementById('schedule');
