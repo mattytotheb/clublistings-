@@ -13,12 +13,9 @@ body{padding:10px 0}
 .listings-title{color:#b8860b;font-size:1.6em;font-weight:bold;text-align:center;margin:18px 0 6px;letter-spacing:.5px}
 .listings-subtitle{font-size:1.15em;font-weight:bold;text-align:center;margin:0 0 12px}
 hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
-.featured-region{margin:14px 0 8px}
-.featured-region-header{color:#b8860b;font-size:.8em;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #daa520;padding-bottom:3px;margin-bottom:6px}
-.featured-region-links{column-count:2;column-gap:20px}
-.featured-venues a{color:#b8860b;text-decoration:none;font-size:1em;font-weight:bold;display:block;line-height:1.9}
-.featured-venues a:hover{text-decoration:underline}
-.toolbar{display:flex;flex-wrap:nowrap;gap:8px;align-items:center;margin:16px 0 4px;padding:10px 12px;background:#b8860b;border-radius:6px}
+
+/* Toolbar */
+.toolbar{display:flex;flex-wrap:nowrap;gap:8px;align-items:center;margin:14px 0 10px;padding:10px 12px;background:#b8860b;border-radius:6px}
 .toolbar-label{font-size:.75em;font-weight:bold;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;flex-shrink:0}
 .search-wrap{position:relative;flex:1;min-width:0}
 #search-input{width:100%;padding:6px 10px;border:2px solid rgba(255,255,255,.5);border-radius:4px;font-size:.88em;outline:none;background:rgba(255,255,255,.15);color:#fff;transition:border-color .2s}
@@ -32,10 +29,35 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .toggle-btn{padding:5px 12px;border:2px solid rgba(255,255,255,.6);background:transparent;border-radius:4px;font-size:.82em;font-weight:bold;cursor:pointer;transition:all .15s;white-space:nowrap;color:#fff;flex-shrink:0}
 .toggle-btn.active{background:#fff;border-color:#fff;color:#b8860b}
 .toggle-btn:hover:not(.active){background:rgba(255,255,255,.2);border-color:#fff}
-#day-nav{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:12px 0 4px}
-.dnb{padding:4px 11px;background:#fff;border:2px solid #daa520;border-radius:20px;color:#b8860b;font-size:.82em;font-weight:bold;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-block;white-space:nowrap}
-.dnb:hover,.dnb.today{background:#daa520;color:#fff}
-.dnb.future-week{border-style:dashed;opacity:.8}
+
+/* Tier 1 — Sponsored (hidden until activated) */
+.sponsored-section{display:none;margin:14px 0 8px}
+.sponsored-header{font-size:.75em;font-weight:bold;letter-spacing:1.8px;text-transform:uppercase;color:#b8860b;border-bottom:2px solid #daa520;padding-bottom:4px;margin-bottom:10px}
+.sponsored-links{display:flex;flex-wrap:wrap;gap:4px 32px}
+.sponsored-links a{font-size:1.2em;font-weight:bold;color:#b8860b;text-decoration:none;line-height:1.9}
+.sponsored-links a:hover{text-decoration:underline;color:#daa520}
+
+/* Tier 2 — Venues by Region */
+.venues-section{margin:14px 0 6px}
+.venues-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:8px 12px;background:#fffbf0;border:1px solid #e0c860;border-radius:5px;transition:background .15s}
+.venues-toggle:hover{background:#fff3cc}
+.venues-toggle-label{font-size:.82em;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:#b8860b}
+.venues-arrow{font-size:.8em;color:#b8860b;transition:transform .25s;display:inline-block}
+.venues-arrow.open{transform:rotate(180deg)}
+.venues-body{display:none;padding:8px 0 4px}
+.venues-body.open{display:block}
+.region-block{margin-bottom:6px}
+.region-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:5px 10px;border-left:3px solid #daa520;background:#fafafa;transition:background .15s}
+.region-toggle:hover{background:#fffbf0}
+.region-name{font-size:.78em;font-weight:bold;letter-spacing:1.1px;text-transform:uppercase;color:#b8860b}
+.region-arrow{font-size:.75em;color:#b8860b;transition:transform .2s;display:inline-block}
+.region-arrow.open{transform:rotate(180deg)}
+.region-links{display:none;padding:6px 10px 4px 16px;column-count:2;column-gap:20px}
+.region-links.open{display:block}
+.region-links a{color:#333;text-decoration:none;font-size:.93em;font-weight:bold;display:block;line-height:1.9}
+.region-links a:hover{color:#b8860b;text-decoration:underline}
+
+/* Schedule */
 .day-section{text-align:left;margin:20px auto 0;max-width:95%}
 .week-divider{display:flex;align-items:center;gap:12px;margin:28px 0 4px;max-width:95%;margin-left:auto;margin-right:auto}
 .week-divider-label{font-size:.75em;font-weight:bold;color:#b8860b;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;background:#fff;padding:0 8px}
@@ -49,38 +71,34 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .venue-name{font-weight:bold}
 .town{text-transform:uppercase;font-size:.88em;color:#555}
 .acts{color:#333}
-.rb{display:inline-block;font-size:.65em;font-weight:bold;letter-spacing:.6px;text-transform:uppercase;padding:1px 6px;border-radius:10px;vertical-align:middle;margin-left:4px;line-height:1.7}
-.bu{background:#e8f4e8;color:#2d6a2d}
-.bm{background:#deeaf8;color:#1e4a82}
-.bl{background:#faeae3;color:#7a3520}
-.bo{background:#f3e4f8;color:#62248a}
 .no-results{text-align:center;color:#999;padding:20px;font-style:italic;display:none}
 .status{padding:30px;text-align:center;color:#777}
 .status.error{color:#b00020}
 .footer-stamp{margin-top:20px;font-size:.75em;color:#999;text-align:center}
 mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
-#btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:none;align-items:center;justify-content:center;z-index:999;line-height:1;font-weight:bold}
+
+/* Back to top — always visible */
+#btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:999;font-weight:bold;text-decoration:none;transition:background .2s}
 #btt:hover{background:#b8860b}
-#btt.visible{display:flex}
+
 @media(max-width:680px){
   .toolbar{flex-wrap:wrap}
   .tdiv{display:none}
   .sort-group{flex-wrap:wrap}
   .lc{width:98%;padding:0 10px 20px}
-  .featured-region-links{column-count:1}
+  .region-links{column-count:1}
 }
 </style>
 </head>
 <body>
 
 <div class="lc" id="top">
+
   <img src="https://www.pixy103.com/images/LISTINGS1.jpg" alt="Club Listings" class="header-img">
   <div class="listings-title">CLUB LISTINGS</div>
   <div class="listings-subtitle">If you're out and about this week<br>check out what's happening at...</div>
-  <hr>
-  <div id="featured" class="featured-venues"><div class="status">Loading...</div></div>
-  <hr>
 
+  <!-- Toolbar -->
   <div class="toolbar">
     <span class="toolbar-label">Find</span>
     <div class="search-wrap">
@@ -96,215 +114,369 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     <button class="toggle-btn" id="weekend-toggle" onclick="toggleWeekend()">&#128197;&nbsp;This Weekend</button>
   </div>
 
-  <div id="day-nav"></div>
+  <hr>
+
+  <!-- Tier 1: Sponsored Featured Venues — hidden until activated.
+       To activate: add a "Sponsored" column to your Featured sheet tab.
+       Set the value to TRUE for any paying client. The section appears automatically. -->
+  <div class="sponsored-section" id="sponsored-section">
+    <div class="sponsored-header">&#9733; Featured Venues</div>
+    <div class="sponsored-links" id="sponsored-links"></div>
+    <hr>
+  </div>
+
+  <!-- Tier 2: Venues by Region — collapsible -->
+  <div class="venues-section">
+    <div class="venues-toggle" onclick="toggleVenues()">
+      <span class="venues-toggle-label">&#9834;&nbsp; Venues &amp; Clubs on Cape Cod</span>
+      <span class="venues-arrow" id="venues-arrow">&#9660;</span>
+    </div>
+    <div class="venues-body" id="venues-body">
+      <div id="region-list"></div>
+    </div>
+  </div>
+
+  <hr>
+
   <div id="schedule"></div>
   <div class="no-results" id="no-results">No events match your search.</div>
   <div id="stamp" class="footer-stamp"></div>
+
 </div>
 
-<button id="btt" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+<!-- Always-visible back to top -->
+<a href="#top" id="btt" title="Back to top">&#8593;</a>
 
 <script>
-const API_URL='https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
-const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const REGION_MAP={
-  'Upper Cape':['Bourne','Falmouth','Mashpee','Sandwich'],
-  'Mid-Cape':['Barnstable','Hyannis','Yarmouth','Dennis','Harwich'],
-  'Lower Cape':['Brewster','Chatham','Orleans'],
-  'Outer Cape':['Eastham','Wellfleet','Truro','Provincetown','Ptown']
-};
-const BADGE_CLS={'Upper Cape':'bu','Mid-Cape':'bm','Lower Cape':'bl','Outer Cape':'bo'};
-const WEEKS=4;
+  // ── Configuration ────────────────────────────────────────────
+  // Replace with your Google Apps Script /exec URL if it ever changes
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
 
-let currentSort='venue',weekendOnly=false,searchQuery='',cachedData=null,lastH=0;
+  // Number of weeks to show in the schedule
+  const WEEKS = 4;
 
-function getRange(){
-  const now=new Date();
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  return Array.from({length:WEEKS*7},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i);return d;});
-}
-function fmtDate(d){return DAYS[d.getDay()]+', '+MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
-function dkey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function pDate(v){if(!v)return null;const d=new Date(v);return isNaN(d)?null:d;}
-function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function regionFor(town){
-  if(!town)return null;
-  const t=town.trim();
-  for(const[r,ts]of Object.entries(REGION_MAP))
-    if(ts.some(x=>t.toLowerCase().includes(x.toLowerCase())))return r;
-  return null;
-}
-function badge(town){
-  const r=regionFor(town);
-  if(!r)return'';
-  return'<span class="rb '+(BADGE_CLS[r]||'')+'">'+esc(r.replace(' Cape',''))+'</span>';
-}
-function timeMins(s){
-  if(!s)return 9999;
-  s=String(s).trim().toLowerCase().replace(/\./g,'');
-  let m=s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
-  if(m){let h=+m[1],mn=+m[2];if(m[3]==='pm'&&h<12)h+=12;if(m[3]==='am'&&h===12)h=0;return h*60+mn;}
-  m=s.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/);
-  if(m){let h=+m[1],mn=m[2]?+m[2]:0;if(m[3]==='pm'&&h<12)h+=12;if(m[3]==='am'&&h===12)h=0;return h*60+mn;}
-  return 9999;
-}
-function hilite(t,q){
-  if(!q)return esc(t);
-  return esc(t).replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');
-}
+  // Region order for the venue list
+  const REGION_ORDER = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
+  // ─────────────────────────────────────────────────────────────
 
-function setSort(m){
-  currentSort=m;
-  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sort-'+m).classList.add('active');
-  if(cachedData)render(cachedData);
-}
-function toggleWeekend(){
-  weekendOnly=!weekendOnly;
-  document.getElementById('weekend-toggle').classList.toggle('active',weekendOnly);
-  if(cachedData)render(cachedData);
-}
+  const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-function render(data){
-  cachedData=data;
+  let currentSort = 'venue';
+  let weekendOnly = false;
+  let searchQuery = '';
+  let cachedData  = null;
+  let lastH       = 0;
+  let venuesOpen  = false;
 
-  // Featured
-  const fEl=document.getElementById('featured');fEl.innerHTML='';
-  const rOrder=['Upper Cape','Mid-Cape','Lower Cape','Outer Cape'];
-  const fgrp={};
-  (data.featured||[]).forEach(v=>{if(!v.Name||!v.URL)return;const r=v.Region||'Other';if(!fgrp[r])fgrp[r]=[];fgrp[r].push(v);});
-  const frs=rOrder.filter(r=>fgrp[r]);if(fgrp.Other)frs.push('Other');
-  frs.forEach(region=>{
-    const sec=document.createElement('div');sec.className='featured-region';
-    const h=document.createElement('div');h.className='featured-region-header';h.textContent=region;sec.appendChild(h);
-    const ld=document.createElement('div');ld.className='featured-region-links';
-    fgrp[region].forEach(v=>{const a=document.createElement('a');a.href=v.URL;a.target='_blank';a.rel='noopener';a.textContent=v.Name;ld.appendChild(a);});
-    sec.appendChild(ld);fEl.appendChild(sec);
-  });
+  // ── Toggle: venues section ───────────────────────────────────
+  function toggleVenues() {
+    venuesOpen = !venuesOpen;
+    document.getElementById('venues-body').classList.toggle('open', venuesOpen);
+    document.getElementById('venues-arrow').classList.toggle('open', venuesOpen);
+  }
 
-  // Date range
-  const range=getRange();
-  const todayKey=dkey(range[0]);
-  const WKND=new Set(['Friday','Saturday','Sunday']);
-  const fr=weekendOnly?range.filter(d=>WKND.has(DAYS[d.getDay()])):range;
+  // ── Toggle: individual region ────────────────────────────────
+  function toggleRegion(id) {
+    const l = document.getElementById('links-' + id);
+    const a = document.getElementById('arrow-' + id);
+    const open = l.classList.contains('open');
+    l.classList.toggle('open', !open);
+    a.classList.toggle('open', !open);
+  }
 
-  const vbd={};
-  (data.thisWeek||[]).forEach(ev=>{const d=pDate(ev.Date);if(!d)return;const k=dkey(d);(vbd[k]=vbd[k]||[]).push(ev);});
-  const rbd={};
-  (data.recurring||[]).forEach(ev=>{const day=String(ev.Day||'').trim();if(!day)return;(rbd[day]=rbd[day]||[]).push(ev);});
+  // ── Toolbar controls ─────────────────────────────────────────
+  function setSort(m) {
+    currentSort = m;
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sort-' + m).classList.add('active');
+    if (cachedData) renderSchedule(cachedData);
+  }
 
-  // Day nav
-  const nav=document.getElementById('day-nav');nav.innerHTML='';
-  fr.forEach(d=>{
-    const dn=DAYS[d.getDay()];
-    const evts=[].concat(rbd[dn]||[]).concat(vbd[dkey(d)]||[]);
-    if(!evts.length)return;
-    const k=dkey(d);
-    const wk=Math.floor(range.indexOf(d)/7);
-    const a=document.createElement('a');
-    a.className='dnb'+(k===todayKey?' today':'')+(wk>0?' future-week':'');
-    a.href='#day-'+k;
-    a.textContent=dn.slice(0,3).toUpperCase()+' '+d.getDate();
-    nav.appendChild(a);
-  });
+  function toggleWeekend() {
+    weekendOnly = !weekendOnly;
+    document.getElementById('weekend-toggle').classList.toggle('active', weekendOnly);
+    if (cachedData) renderSchedule(cachedData);
+  }
 
-  // Schedule
-  const sEl=document.getElementById('schedule');sEl.innerHTML='';
-  const q=searchQuery.trim().toLowerCase();
-  let total=0,lastWeekNum=-1;
-
-  fr.forEach(d=>{
-    const dn=DAYS[d.getDay()];const k=dkey(d);
-    const evts=[].concat(rbd[dn]||[]).concat(vbd[k]||[]);
-    if(!evts.length)return;
-
-    const g={};const go=[];
-    evts.forEach(ev=>{
-      const gk=(ev.Venue||'')+'|'+(ev.Town||'');
-      if(!g[gk]){g[gk]={venue:ev.Venue||'',town:ev.Town||'',acts:[],time:ev.Time||'',sm:timeMins(ev.Time)};go.push(gk);}
-      const act=ev.Event||'';if(act&&!g[gk].acts.includes(act))g[gk].acts.push(act);
-      const m=timeMins(ev.Time);if(m<g[gk].sm){g[gk].sm=m;g[gk].time=ev.Time||'';}
+  // ── Helpers ──────────────────────────────────────────────────
+  function getRange() {
+    const now   = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Array.from({ length: WEEKS * 7 }, (_, i) => {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      return d;
     });
-    if(currentSort==='time')go.sort((a,b)=>g[a].sm-g[b].sm);
-    else go.sort((a,b)=>g[a].venue.toLowerCase().localeCompare(g[b].venue.toLowerCase()));
-    const vis=q?go.filter(gk=>(g[gk].venue+' '+g[gk].town+' '+g[gk].acts.join(' ')).toLowerCase().includes(q)):go;
-    if(!vis.length)return;
-    total+=vis.length;
+  }
 
-    // Week divider
-    const weekNum=Math.floor(range.indexOf(d)/7);
-    if(weekNum!==lastWeekNum){
-      lastWeekNum=weekNum;
-      if(weekNum>0){
-        const div=document.createElement('div');div.className='week-divider';
-        div.innerHTML='<div class="week-divider-line"></div><div class="week-divider-label">Week '+(weekNum+1)+'</div><div class="week-divider-line"></div>';
-        sEl.appendChild(div);
-      }
+  function fmtDate(d) {
+    return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function dkey(d) {
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function pDate(v) {
+    if (!v) return null;
+    const d = new Date(v);
+    return isNaN(d) ? null : d;
+  }
+
+  function esc(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function timeMins(s) {
+    if (!s) return 9999;
+    s = String(s).trim().toLowerCase().replace(/\./g, '');
+    let m = s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
+    if (m) {
+      let h = +m[1], mn = +m[2];
+      if (m[3] === 'pm' && h < 12) h += 12;
+      if (m[3] === 'am' && h === 12) h = 0;
+      return h * 60 + mn;
     }
+    m = s.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/);
+    if (m) {
+      let h = +m[1], mn = m[2] ? +m[2] : 0;
+      if (m[3] === 'pm' && h < 12) h += 12;
+      if (m[3] === 'am' && h === 12) h = 0;
+      return h * 60 + mn;
+    }
+    return 9999;
+  }
 
-    const sec=document.createElement('div');sec.className='day-section';sec.id='day-'+k;
-    const hdr=document.createElement('div');hdr.className='day-header';
-    hdr.innerHTML=fmtDate(d)+(k===todayKey?' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>':'')+
-      ' <span class="day-count">'+vis.length+' event'+(vis.length!==1?'s':'')+'</span>';
-    sec.appendChild(hdr);
+  function hilite(t, q) {
+    if (!q) return esc(t);
+    return esc(t).replace(
+      new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
+      '<mark>$1</mark>'
+    );
+  }
 
-    vis.forEach(gk=>{
-      const gg=g[gk];const div=document.createElement('div');div.className='event';
-      const ts=gg.time?'<span class="event-time">'+esc(gg.time)+'</span>':'<span class="event-time"></span>';
-      const as=gg.acts.length?gg.acts.map(a=>hilite(a,searchQuery.trim())).join(' / '):'';
-      div.innerHTML=ts+
-        '<span class="venue-name">'+hilite(gg.venue,searchQuery.trim())+'</span> '+
-        '<span class="town">'+esc(gg.town)+badge(gg.town)+'</span>'+
-        (as?' &mdash; <span class="acts">'+as+'</span>':'');
-      sec.appendChild(div);
+  // ── Render: Sponsored (Tier 1) ───────────────────────────────
+  function renderSponsored(featured) {
+    const sp = (featured || []).filter(v =>
+      String(v.Sponsored).toUpperCase() === 'TRUE' ||
+      String(v.Sponsored).toLowerCase() === 'yes'
+    );
+    if (!sp.length) return;
+    const el = document.getElementById('sponsored-links');
+    el.innerHTML = '';
+    sp.forEach(v => {
+      const a = document.createElement('a');
+      a.href = v.URL; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = v.Name;
+      el.appendChild(a);
     });
-    sEl.appendChild(sec);
+    document.getElementById('sponsored-section').style.display = 'block';
+  }
+
+  // ── Render: Venues by Region (Tier 2) ────────────────────────
+  function renderRegions(featured) {
+    const grouped = {};
+    (featured || []).forEach(v => {
+      if (!v.Name || !v.URL) return;
+      const r = v.Region || 'Other';
+      if (!grouped[r]) grouped[r] = [];
+      grouped[r].push(v);
+    });
+    const order = [...REGION_ORDER.filter(r => grouped[r])];
+    if (grouped['Other']) order.push('Other');
+
+    const container = document.getElementById('region-list');
+    container.innerHTML = '';
+
+    order.forEach((region, idx) => {
+      const id = 'r' + idx;
+      const block = document.createElement('div');
+      block.className = 'region-block';
+      block.innerHTML =
+        '<div class="region-toggle" onclick="toggleRegion(\'' + id + '\')">' +
+          '<span class="region-name">' + esc(region) + '</span>' +
+          '<span class="region-arrow" id="arrow-' + id + '">&#9660;</span>' +
+        '</div>' +
+        '<div class="region-links" id="links-' + id + '"></div>';
+      container.appendChild(block);
+
+      const linksEl = document.getElementById('links-' + id);
+      grouped[region].forEach(v => {
+        const a = document.createElement('a');
+        a.href = v.URL; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = v.Name;
+        linksEl.appendChild(a);
+      });
+    });
+  }
+
+  // ── Render: Schedule ─────────────────────────────────────────
+  function renderSchedule(data) {
+    const range    = getRange();
+    const todayKey = dkey(range[0]);
+    const WKND     = new Set(['Friday', 'Saturday', 'Sunday']);
+    const fr       = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
+
+    const vbd = {};
+    (data.thisWeek || []).forEach(ev => {
+      const d = pDate(ev.Date);
+      if (!d) return;
+      const k = dkey(d);
+      (vbd[k] = vbd[k] || []).push(ev);
+    });
+
+    const rbd = {};
+    (data.recurring || []).forEach(ev => {
+      const day = String(ev.Day || '').trim();
+      if (!day) return;
+      (rbd[day] = rbd[day] || []).push(ev);
+    });
+
+    const sEl = document.getElementById('schedule');
+    sEl.innerHTML = '';
+    const q = searchQuery.trim().toLowerCase();
+    let total = 0, lastWeekNum = -1;
+
+    fr.forEach(d => {
+      const dn = DAYS[d.getDay()], k = dkey(d);
+      const evts = [].concat(rbd[dn] || []).concat(vbd[k] || []);
+      if (!evts.length) return;
+
+      const g = {}, go = [];
+      evts.forEach(ev => {
+        const gk = (ev.Venue || '') + '|' + (ev.Town || '');
+        if (!g[gk]) {
+          g[gk] = { venue: ev.Venue || '', town: ev.Town || '', acts: [], time: ev.Time || '', sm: timeMins(ev.Time) };
+          go.push(gk);
+        }
+        const act = ev.Event || '';
+        if (act && !g[gk].acts.includes(act)) g[gk].acts.push(act);
+        const m = timeMins(ev.Time);
+        if (m < g[gk].sm) { g[gk].sm = m; g[gk].time = ev.Time || ''; }
+      });
+
+      if (currentSort === 'time')
+        go.sort((a, b) => g[a].sm - g[b].sm);
+      else
+        go.sort((a, b) => g[a].venue.toLowerCase().localeCompare(g[b].venue.toLowerCase()));
+
+      const vis = q
+        ? go.filter(gk => (g[gk].venue + ' ' + g[gk].town + ' ' + g[gk].acts.join(' ')).toLowerCase().includes(q))
+        : go;
+      if (!vis.length) return;
+      total += vis.length;
+
+      // Week divider
+      const weekNum = Math.floor(range.indexOf(d) / 7);
+      if (weekNum !== lastWeekNum) {
+        lastWeekNum = weekNum;
+        if (weekNum > 0) {
+          const div = document.createElement('div');
+          div.className = 'week-divider';
+          div.innerHTML =
+            '<div class="week-divider-line"></div>' +
+            '<div class="week-divider-label">Week ' + (weekNum + 1) + '</div>' +
+            '<div class="week-divider-line"></div>';
+          sEl.appendChild(div);
+        }
+      }
+
+      const sec = document.createElement('div');
+      sec.className = 'day-section';
+      sec.id = 'day-' + k;
+
+      const hdr = document.createElement('div');
+      hdr.className = 'day-header';
+      hdr.innerHTML = fmtDate(d) +
+        (k === todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
+        ' <span class="day-count">' + vis.length + ' event' + (vis.length !== 1 ? 's' : '') + '</span>';
+      sec.appendChild(hdr);
+
+      vis.forEach(gk => {
+        const gg  = g[gk];
+        const div = document.createElement('div');
+        div.className = 'event';
+        const ts = gg.time
+          ? '<span class="event-time">' + esc(gg.time) + '</span>'
+          : '<span class="event-time"></span>';
+        const as = gg.acts.length
+          ? gg.acts.map(a => hilite(a, searchQuery.trim())).join(' / ')
+          : '';
+        div.innerHTML =
+          ts +
+          '<span class="venue-name">' + hilite(gg.venue, searchQuery.trim()) + '</span> ' +
+          '<span class="town">' + esc(gg.town) + '</span>' +
+          (as ? ' &mdash; <span class="acts">' + as + '</span>' : '');
+        sec.appendChild(div);
+      });
+
+      sEl.appendChild(sec);
+    });
+
+    document.getElementById('no-results').style.display = (q && total === 0) ? 'block' : 'none';
+    if (!q && total === 0)
+      sEl.innerHTML = '<div class="status">No events scheduled for the next ' + WEEKS + ' weeks.</div>';
+
+    const st = document.getElementById('stamp');
+    if (data.generatedAt)
+      st.textContent = 'Updated ' + new Date(data.generatedAt).toLocaleString();
+
+    reportH();
+  }
+
+  // ── Main render ──────────────────────────────────────────────
+  function render(data) {
+    cachedData = data;
+    renderSponsored(data.featured);
+    renderRegions(data.featured);
+    renderSchedule(data);
+  }
+
+  // ── Search handler ───────────────────────────────────────────
+  document.getElementById('search-input').addEventListener('input', function () {
+    searchQuery = this.value;
+    if (cachedData) renderSchedule(cachedData);
   });
 
-  document.getElementById('no-results').style.display=(q&&total===0)?'block':'none';
-  if(!q&&total===0)sEl.innerHTML='<div class="status">No events scheduled for the next '+WEEKS+' weeks.</div>';
-  const st=document.getElementById('stamp');
-  if(data.generatedAt)st.textContent='Updated '+new Date(data.generatedAt).toLocaleString();
-  reportH();
-}
+  // ── Height reporting for Joomla iframe ───────────────────────
+  function reportH() {
+    try {
+      const c = document.querySelector('.lc');
+      if (!c) return;
+      const h = Math.ceil(c.getBoundingClientRect().bottom + 20);
+      if (Math.abs(h - lastH) < 3) return;
+      lastH = h;
+      if (window.parent && window.parent !== window)
+        window.parent.postMessage({ type: 'club-listings-resize', height: h }, '*');
+    } catch (e) {}
+  }
 
-document.getElementById('search-input').addEventListener('input',function(){
-  searchQuery=this.value;
-  if(cachedData)render(cachedData);
-});
+  // ── Load data ────────────────────────────────────────────────
+  function loadListings() {
+    fetch(API_URL)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        render(data);
+      })
+      .catch(err => {
+        document.getElementById('schedule').innerHTML =
+          '<div class="status error">Unable to load listings: ' + esc(err.message) + '</div>';
+        reportH();
+      });
+  }
 
-window.addEventListener('scroll',()=>{
-  document.getElementById('btt').classList.toggle('visible',window.scrollY>300);
-});
-
-function reportH(){
-  try{
-    const c=document.querySelector('.lc');if(!c)return;
-    const h=Math.ceil(c.getBoundingClientRect().bottom+20);
-    if(Math.abs(h-lastH)<3)return;
-    lastH=h;
-    if(window.parent&&window.parent!==window)
-      window.parent.postMessage({type:'club-listings-resize',height:h},'*');
-  }catch(e){}
-}
-
-function loadListings(){
-  fetch(API_URL)
-    .then(r=>r.json())
-    .then(data=>{if(data.error)throw new Error(data.error);render(data);})
-    .catch(err=>{
-      document.getElementById('featured').innerHTML='<div class="status error">Unable to load listings: '+esc(err.message)+'</div>';
-      document.getElementById('schedule').innerHTML='';
-      reportH();
-    });
-}
-
-window.addEventListener('load',()=>{
-  loadListings();
-  setTimeout(reportH,300);
-  setTimeout(reportH,800);
-});
+  window.addEventListener('load', () => {
+    loadListings();
+    setTimeout(reportH, 300);
+    setTimeout(reportH, 800);
+  });
 </script>
 </body>
 </html>
