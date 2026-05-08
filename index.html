@@ -14,10 +14,10 @@ body{padding:10px 0}
 .listings-subtitle{font-size:1.15em;font-weight:bold;text-align:center;margin:0 0 12px}
 hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 
-/* Toolbar */
+/* ── Toolbar ── */
 .toolbar{display:flex;flex-wrap:nowrap;gap:8px;align-items:center;margin:14px 0 10px;padding:10px 12px;background:#b8860b;border-radius:6px}
 .toolbar-label{font-size:.75em;font-weight:bold;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;flex-shrink:0}
-.search-wrap{position:relative;flex:1;min-width:0}
+.search-wrap{flex:1;min-width:0}
 #search-input{width:100%;padding:6px 10px;border:2px solid rgba(255,255,255,.5);border-radius:4px;font-size:.88em;outline:none;background:rgba(255,255,255,.15);color:#fff;transition:border-color .2s}
 #search-input::placeholder{color:rgba(255,255,255,.65)}
 #search-input:focus{border-color:#fff;background:rgba(255,255,255,.25)}
@@ -30,34 +30,28 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .toggle-btn.active{background:#fff;border-color:#fff;color:#b8860b}
 .toggle-btn:hover:not(.active){background:rgba(255,255,255,.2);border-color:#fff}
 
-/* Tier 1 — Sponsored (hidden until activated) */
+/* ── Tier 1: Sponsored (hidden until activated) ── */
 .sponsored-section{display:none;margin:14px 0 8px}
 .sponsored-header{font-size:.75em;font-weight:bold;letter-spacing:1.8px;text-transform:uppercase;color:#b8860b;border-bottom:2px solid #daa520;padding-bottom:4px;margin-bottom:10px}
 .sponsored-links{display:flex;flex-wrap:wrap;gap:4px 32px}
 .sponsored-links a{font-size:1.2em;font-weight:bold;color:#b8860b;text-decoration:none;line-height:1.9}
 .sponsored-links a:hover{text-decoration:underline;color:#daa520}
 
-/* Tier 2 — Venues by Region */
+/* ── Tier 2: Venues section ── */
 .venues-section{margin:14px 0 6px}
-.venues-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:8px 12px;background:#fffbf0;border:1px solid #e0c860;border-radius:5px;transition:background .15s}
-.venues-toggle:hover{background:#fff3cc}
-.venues-toggle-label{font-size:.82em;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:#b8860b}
-.venues-arrow{font-size:.8em;color:#b8860b;transition:transform .25s;display:inline-block}
-.venues-arrow.open{transform:rotate(180deg)}
-.venues-body{display:none;padding:8px 0 4px}
-.venues-body.open{display:block}
-.region-block{margin-bottom:6px}
+.venues-section-title{font-size:.8em;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#b8860b;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e8d080}
+.region-block{margin-bottom:5px}
 .region-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:5px 10px;border-left:3px solid #daa520;background:#fafafa;transition:background .15s}
 .region-toggle:hover{background:#fffbf0}
 .region-name{font-size:.78em;font-weight:bold;letter-spacing:1.1px;text-transform:uppercase;color:#b8860b}
 .region-arrow{font-size:.75em;color:#b8860b;transition:transform .2s;display:inline-block}
 .region-arrow.open{transform:rotate(180deg)}
-.region-links{display:none;padding:6px 10px 4px 16px;column-count:2;column-gap:20px}
+.region-links{display:none;padding:4px 10px 6px 16px;column-count:2;column-gap:20px}
 .region-links.open{display:block}
-.region-links a{color:#333;text-decoration:none;font-size:.93em;font-weight:bold;display:block;line-height:1.9}
+.region-links a{color:#666;text-decoration:none;font-size:.93em;font-weight:normal;display:block;line-height:1.9}
 .region-links a:hover{color:#b8860b;text-decoration:underline}
 
-/* Schedule */
+/* ── Schedule ── */
 .day-section{text-align:left;margin:20px auto 0;max-width:95%}
 .week-divider{display:flex;align-items:center;gap:12px;margin:28px 0 4px;max-width:95%;margin-left:auto;margin-right:auto}
 .week-divider-label{font-size:.75em;font-weight:bold;color:#b8860b;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;background:#fff;padding:0 8px}
@@ -77,7 +71,7 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .footer-stamp{margin-top:20px;font-size:.75em;color:#999;text-align:center}
 mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
-/* Back to top — always visible */
+/* ── Back to top — always visible ── */
 #btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:999;font-weight:bold;text-decoration:none;transition:background .2s}
 #btt:hover{background:#b8860b}
 
@@ -116,24 +110,19 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   <hr>
 
-  <!-- Tier 1: Sponsored Featured Venues — hidden until activated.
-       To activate: add a "Sponsored" column to your Featured sheet tab.
-       Set the value to TRUE for any paying client. The section appears automatically. -->
+  <!-- Tier 1: Sponsored Featured Venues
+       Hidden until activated. Add a "Sponsored" column to your Featured sheet
+       tab and set it to TRUE for paying clients — section appears automatically. -->
   <div class="sponsored-section" id="sponsored-section">
     <div class="sponsored-header">&#9733; Featured Venues</div>
     <div class="sponsored-links" id="sponsored-links"></div>
     <hr>
   </div>
 
-  <!-- Tier 2: Venues by Region — collapsible -->
+  <!-- Tier 2: Venues by Region — title is always visible, regions collapse individually -->
   <div class="venues-section">
-    <div class="venues-toggle" onclick="toggleVenues()">
-      <span class="venues-toggle-label">&#9834;&nbsp; Venues &amp; Clubs on Cape Cod</span>
-      <span class="venues-arrow" id="venues-arrow">&#9660;</span>
-    </div>
-    <div class="venues-body" id="venues-body">
-      <div id="region-list"></div>
-    </div>
+    <div class="venues-section-title">&#9834;&nbsp; Venues &amp; Clubs on Cape Cod</div>
+    <div id="region-list"></div>
   </div>
 
   <hr>
@@ -144,18 +133,12 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
 </div>
 
-<!-- Always-visible back to top -->
 <a href="#top" id="btt" title="Back to top">&#8593;</a>
 
 <script>
-  // ── Configuration ────────────────────────────────────────────
-  // Replace with your Google Apps Script /exec URL if it ever changes
+  // ── Configuration ─────────────────────────────────────────────
   const API_URL = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
-
-  // Number of weeks to show in the schedule
   const WEEKS = 4;
-
-  // Region order for the venue list
   const REGION_ORDER = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
   // ─────────────────────────────────────────────────────────────
 
@@ -167,16 +150,8 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   let searchQuery = '';
   let cachedData  = null;
   let lastH       = 0;
-  let venuesOpen  = false;
 
-  // ── Toggle: venues section ───────────────────────────────────
-  function toggleVenues() {
-    venuesOpen = !venuesOpen;
-    document.getElementById('venues-body').classList.toggle('open', venuesOpen);
-    document.getElementById('venues-arrow').classList.toggle('open', venuesOpen);
-  }
-
-  // ── Toggle: individual region ────────────────────────────────
+  // ── Region toggles ────────────────────────────────────────────
   function toggleRegion(id) {
     const l = document.getElementById('links-' + id);
     const a = document.getElementById('arrow-' + id);
@@ -185,7 +160,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     a.classList.toggle('open', !open);
   }
 
-  // ── Toolbar controls ─────────────────────────────────────────
+  // ── Toolbar ───────────────────────────────────────────────────
   function setSort(m) {
     currentSort = m;
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -199,7 +174,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     if (cachedData) renderSchedule(cachedData);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────────
   function getRange() {
     const now   = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -229,8 +204,8 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   function esc(s) {
     if (s == null) return '';
     return String(s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
   function timeMins(s) {
@@ -261,7 +236,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     );
   }
 
-  // ── Render: Sponsored (Tier 1) ───────────────────────────────
+  // ── Render: Sponsored (Tier 1) ────────────────────────────────
   function renderSponsored(featured) {
     const sp = (featured || []).filter(v =>
       String(v.Sponsored).toUpperCase() === 'TRUE' ||
@@ -317,6 +292,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   }
 
   // ── Render: Schedule ─────────────────────────────────────────
+  // One row per sheet event — multiple acts at the same venue each get their own line.
   function renderSchedule(data) {
     const range    = getRange();
     const todayKey = dkey(range[0]);
@@ -345,32 +321,31 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
     fr.forEach(d => {
       const dn = DAYS[d.getDay()], k = dkey(d);
-      const evts = [].concat(rbd[dn] || []).concat(vbd[k] || []);
+
+      // All raw events for this day
+      let evts = [].concat(rbd[dn] || []).concat(vbd[k] || []);
       if (!evts.length) return;
 
-      const g = {}, go = [];
-      evts.forEach(ev => {
-        const gk = (ev.Venue || '') + '|' + (ev.Town || '');
-        if (!g[gk]) {
-          g[gk] = { venue: ev.Venue || '', town: ev.Town || '', acts: [], time: ev.Time || '', sm: timeMins(ev.Time) };
-          go.push(gk);
-        }
-        const act = ev.Event || '';
-        if (act && !g[gk].acts.includes(act)) g[gk].acts.push(act);
-        const m = timeMins(ev.Time);
-        if (m < g[gk].sm) { g[gk].sm = m; g[gk].time = ev.Time || ''; }
-      });
+      // Search filter
+      if (q) {
+        evts = evts.filter(ev =>
+          (ev.Venue || '').toLowerCase().includes(q) ||
+          (ev.Town  || '').toLowerCase().includes(q) ||
+          (ev.Event || '').toLowerCase().includes(q)
+        );
+      }
+      if (!evts.length) return;
 
-      if (currentSort === 'time')
-        go.sort((a, b) => g[a].sm - g[b].sm);
-      else
-        go.sort((a, b) => g[a].venue.toLowerCase().localeCompare(g[b].venue.toLowerCase()));
+      // Sort
+      if (currentSort === 'time') {
+        evts.sort((a, b) => timeMins(a.Time) - timeMins(b.Time));
+      } else {
+        evts.sort((a, b) =>
+          (a.Venue || '').toLowerCase().localeCompare((b.Venue || '').toLowerCase())
+        );
+      }
 
-      const vis = q
-        ? go.filter(gk => (g[gk].venue + ' ' + g[gk].town + ' ' + g[gk].acts.join(' ')).toLowerCase().includes(q))
-        : go;
-      if (!vis.length) return;
-      total += vis.length;
+      total += evts.length;
 
       // Week divider
       const weekNum = Math.floor(range.indexOf(d) / 7);
@@ -394,25 +369,25 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       const hdr = document.createElement('div');
       hdr.className = 'day-header';
       hdr.innerHTML = fmtDate(d) +
-        (k === todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
-        ' <span class="day-count">' + vis.length + ' event' + (vis.length !== 1 ? 's' : '') + '</span>';
+        (k === todayKey
+          ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>'
+          : '') +
+        ' <span class="day-count">' + evts.length + ' event' + (evts.length !== 1 ? 's' : '') + '</span>';
       sec.appendChild(hdr);
 
-      vis.forEach(gk => {
-        const gg  = g[gk];
+      // One row per event row from the sheet
+      evts.forEach(ev => {
         const div = document.createElement('div');
         div.className = 'event';
-        const ts = gg.time
-          ? '<span class="event-time">' + esc(gg.time) + '</span>'
-          : '<span class="event-time"></span>';
-        const as = gg.acts.length
-          ? gg.acts.map(a => hilite(a, searchQuery.trim())).join(' / ')
-          : '';
+        const time  = ev.Time  || '';
+        const venue = ev.Venue || '';
+        const town  = ev.Town  || '';
+        const act   = ev.Event || '';
         div.innerHTML =
-          ts +
-          '<span class="venue-name">' + hilite(gg.venue, searchQuery.trim()) + '</span> ' +
-          '<span class="town">' + esc(gg.town) + '</span>' +
-          (as ? ' &mdash; <span class="acts">' + as + '</span>' : '');
+          (time ? '<span class="event-time">' + esc(time) + '</span>' : '<span class="event-time"></span>') +
+          '<span class="venue-name">' + hilite(venue, searchQuery.trim()) + '</span> ' +
+          '<span class="town">' + esc(town) + '</span>' +
+          (act ? ' &mdash; <span class="acts">' + hilite(act, searchQuery.trim()) + '</span>' : '');
         sec.appendChild(div);
       });
 
@@ -430,7 +405,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     reportH();
   }
 
-  // ── Main render ──────────────────────────────────────────────
+  // ── Main render ───────────────────────────────────────────────
   function render(data) {
     cachedData = data;
     renderSponsored(data.featured);
@@ -438,7 +413,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     renderSchedule(data);
   }
 
-  // ── Search handler ───────────────────────────────────────────
+  // ── Search ────────────────────────────────────────────────────
   document.getElementById('search-input').addEventListener('input', function () {
     searchQuery = this.value;
     if (cachedData) renderSchedule(cachedData);
@@ -457,7 +432,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     } catch (e) {}
   }
 
-  // ── Load data ────────────────────────────────────────────────
+  // ── Load ──────────────────────────────────────────────────────
   function loadListings() {
     fetch(API_URL)
       .then(r => r.json())
