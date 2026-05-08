@@ -37,19 +37,17 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .sponsored-links a{font-size:1.2em;font-weight:bold;color:#b8860b;text-decoration:none;line-height:1.9}
 .sponsored-links a:hover{text-decoration:underline;color:#daa520}
 
-/* ── Tier 2: Venues — Option B: dominant headers, lighter venue links ── */
+/* ── Tier 2: Venues ── */
 .venues-section{margin:14px 0 6px}
 .venues-section-title{display:flex;align-items:center;padding:8px 12px;background:#fffbf0;border:1px solid #e0c860;border-radius:5px;margin-bottom:8px;font-size:.82em;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:#b8860b}
 .region-block{margin-bottom:5px}
 .region-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:6px 10px;border-left:3px solid #daa520;background:#fafafa;transition:background .15s}
 .region-toggle:hover{background:#fffbf0}
-/* Option B: bigger, more dominant region header */
 .region-name{font-size:1em;font-weight:bold;color:#b8860b;letter-spacing:.5px}
 .region-arrow{font-size:.8em;color:#b8860b;transition:transform .2s;display:inline-block}
 .region-arrow.open{transform:rotate(180deg)}
 .region-links{display:none;padding:4px 10px 6px 16px;column-count:2;column-gap:20px}
 .region-links.open{display:block}
-/* Option B: lighter, smaller venue links — clearly subordinate */
 .region-links a{color:#444;text-decoration:none;font-size:.88em;font-weight:normal;display:block;line-height:1.9}
 .region-links a:hover{color:#b8860b;text-decoration:underline}
 
@@ -68,10 +66,40 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .town{text-transform:uppercase;font-size:.88em;color:#555}
 .acts{color:#333}
 
-/* ── Show More button ── */
+/* ── Show More ── */
 .show-more-wrap{text-align:center;margin:24px 0 8px}
 .show-more-btn{padding:8px 28px;background:#fff;border:2px solid #daa520;border-radius:4px;color:#b8860b;font-size:.88em;font-weight:bold;cursor:pointer;letter-spacing:.5px;transition:all .2s}
 .show-more-btn:hover{background:#daa520;color:#fff}
+
+/* ── Submission Form ── */
+.submit-section{margin:28px 0 0}
+.submit-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:10px 14px;background:#b8860b;border-radius:5px;transition:background .15s}
+.submit-toggle:hover{background:#a07010}
+.submit-toggle-label{font-size:.85em;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:#fff}
+.submit-arrow{font-size:.85em;color:#fff;transition:transform .25s;display:inline-block}
+.submit-arrow.open{transform:rotate(180deg)}
+.submit-body{display:none;padding:18px 4px 8px}
+.submit-body.open{display:block}
+.submit-intro{font-size:.88em;color:#666;margin-bottom:16px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group.full{grid-column:1 / -1}
+.form-group label{font-size:.78em;font-weight:bold;letter-spacing:.8px;text-transform:uppercase;color:#b8860b}
+.form-group input,
+.form-group select,
+.form-group textarea{padding:7px 10px;border:1px solid #ccc;border-radius:4px;font-size:.9em;font-family:inherit;outline:none;transition:border-color .2s;color:#222;background:#fff}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:#daa520;box-shadow:0 0 0 2px rgba(218,165,32,.15)}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-note{font-size:.75em;color:#999;margin-top:2px}
+.form-actions{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.submit-btn{padding:9px 28px;background:#b8860b;border:none;border-radius:4px;color:#fff;font-size:.9em;font-weight:bold;cursor:pointer;letter-spacing:.5px;transition:background .2s}
+.submit-btn:hover{background:#a07010}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed}
+.form-status{font-size:.85em;font-weight:bold}
+.form-status.success{color:#2d6a2d}
+.form-status.error{color:#b00020}
 
 .no-results{text-align:center;color:#999;padding:20px;font-style:italic;display:none}
 .status{padding:30px;text-align:center;color:#777}
@@ -80,8 +108,13 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
 /* ── Back to top ── */
-#btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:9999;font-weight:bold;transition:background .2s;line-height:1}
+#btt{position:fixed;bottom:70px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:9999;font-weight:bold;transition:background .2s;line-height:1}
 #btt:hover{background:#b8860b}
+
+/* ── Sticky submit bar ── */
+#sticky-submit{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#222;color:#fff;text-align:center;padding:11px 16px;font-size:.88em;font-weight:bold;letter-spacing:.8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 -2px 8px rgba(0,0,0,.2);transition:background .2s}
+#sticky-submit:hover{background:#b8860b}
+body{padding-bottom:48px}
 
 @media(max-width:680px){
   .toolbar{flex-wrap:wrap}
@@ -89,6 +122,8 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   .sort-group{flex-wrap:wrap}
   .lc{width:98%;padding:0 10px 20px}
   .region-links{column-count:1}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
 }
 </style>
 </head>
@@ -136,58 +171,201 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   <hr>
 
   <div id="schedule"></div>
+
   <div id="show-more-wrap" class="show-more-wrap" style="display:none">
     <button class="show-more-btn" onclick="expandWeeks()">&#9660;&nbsp; Show More Weeks</button>
   </div>
+
   <div class="no-results" id="no-results">No events match your search.</div>
+
+  <!-- ── Submit an Event ── -->
+  <div class="submit-section">
+    <div class="submit-toggle" onclick="toggleSubmit()">
+      <span class="submit-toggle-label">&#43;&nbsp; Submit an Event</span>
+      <span class="submit-arrow" id="submit-arrow">&#9660;</span>
+    </div>
+    <div class="submit-body" id="submit-body">
+      <p class="submit-intro">
+        Know about a show that isn't listed? Fill out the form below and we'll review it.
+        Approved events are added to the schedule — usually within 24 hours.
+      </p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="f-venue">Venue Name *</label>
+          <input type="text" id="f-venue" placeholder="e.g. The Beachcomber" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="f-town">Town *</label>
+          <input type="text" id="f-town" placeholder="e.g. Wellfleet" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="f-date">Date *</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="form-group">
+          <label for="f-time">Start Time</label>
+          <input type="text" id="f-time" placeholder="e.g. 8pm or 8:30 PM" autocomplete="off">
+        </div>
+        <div class="form-group full">
+          <label for="f-event">Performer / Event *</label>
+          <input type="text" id="f-event" placeholder="e.g. The Rose Clancy Band" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="f-name">Your Name</label>
+          <input type="text" id="f-name" placeholder="Optional" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="f-email">Your Email</label>
+          <input type="email" id="f-email" placeholder="Optional — for follow-up only" autocomplete="off">
+          <span class="form-note">Never displayed publicly.</span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="submit-btn" id="submit-btn" onclick="submitEvent()">Submit Event</button>
+        <span class="form-status" id="form-status"></span>
+      </div>
+    </div>
+  </div>
+
   <div id="stamp" class="footer-stamp"></div>
 
 </div>
 
-<!-- Back to top — fixed, always visible, JS-powered for iframe compatibility -->
 <button id="btt" title="Back to top" onclick="scrollToTop()">&#8593;</button>
+
+<!-- Sticky submit bar — always visible at bottom of viewport -->
+<div id="sticky-submit" onclick="openSubmitForm()" title="Submit an event">
+  <span>&#43;</span>
+  <span>Submit an Event</span>
+</div>
 
 <script>
   // ── Configuration ─────────────────────────────────────────────
-  const API_URL      = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
-  const WEEKS_DEFAULT = 2;   // weeks shown on load
-  const WEEKS_TOTAL   = 4;   // weeks shown after "Show More"
+  const API_URL       = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
+  const WEEKS_DEFAULT = 2;
+  const WEEKS_TOTAL   = 4;
   const REGION_ORDER  = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
   // ─────────────────────────────────────────────────────────────
 
   const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  let currentSort  = 'venue';
-  let weekendOnly  = false;
-  let searchQuery  = '';
-  let cachedData   = null;
-  let lastH        = 0;
-  let weeksToShow  = WEEKS_DEFAULT;
+  let currentSort = 'venue';
+  let weekendOnly = false;
+  let searchQuery = '';
+  let cachedData  = null;
+  let lastH       = 0;
+  let weeksToShow = WEEKS_DEFAULT;
+  let submitOpen  = false;
 
-  // ── Back to top — works in both iframe and standalone ────────
+  // ── Back to top (iframe-aware) ────────────────────────────────
   function scrollToTop() {
-    // Try to scroll the parent page (Joomla iframe context)
     try {
       if (window.parent && window.parent !== window) {
         window.parent.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
     } catch (e) {}
-    // Fallback: scroll this document
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }
 
-  // ── Show More ────────────────────────────────────────────────
+  // ── Open submit form from sticky bar ─────────────────────────
+  function openSubmitForm() {
+    // Open the form if not already open
+    if (!submitOpen) {
+      submitOpen = true;
+      document.getElementById('submit-body').classList.add('open');
+      document.getElementById('submit-arrow').classList.add('open');
+      reportH();
+    }
+    // Scroll to the form — iframe-aware
+    setTimeout(() => {
+      const formEl = document.getElementById('submit-body');
+      if (!formEl) return;
+      const rect = formEl.getBoundingClientRect();
+      try {
+        if (window.parent && window.parent !== window) {
+          // Get iframe's offset within the parent page
+          const iframeEl = window.parent.document.querySelector('iframe');
+          const iframeTop = iframeEl ? iframeEl.getBoundingClientRect().top + window.parent.scrollY : 0;
+          window.parent.scrollTo({ top: iframeTop + rect.top - 20, behavior: 'smooth' });
+          return;
+        }
+      } catch (e) {}
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+
+  // ── Submit form toggle (header click) ────────────────────────
+  function toggleSubmit() {
+    submitOpen = !submitOpen;
+    document.getElementById('submit-body').classList.toggle('open', submitOpen);
+    document.getElementById('submit-arrow').classList.toggle('open', submitOpen);
+  }
+
+  // ── Submit event ──────────────────────────────────────────────
+  function submitEvent() {
+    const venue = document.getElementById('f-venue').value.trim();
+    const town  = document.getElementById('f-town').value.trim();
+    const date  = document.getElementById('f-date').value.trim();
+    const event = document.getElementById('f-event').value.trim();
+    const time  = document.getElementById('f-time').value.trim();
+    const name  = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+
+    const statusEl = document.getElementById('form-status');
+    const btnEl    = document.getElementById('submit-btn');
+
+    // Basic validation
+    if (!venue || !town || !date || !event) {
+      statusEl.className = 'form-status error';
+      statusEl.textContent = 'Please fill in all required fields (*)';
+      return;
+    }
+
+    btnEl.disabled = true;
+    statusEl.className = 'form-status';
+    statusEl.textContent = 'Submitting\u2026';
+
+    const payload = { action: 'submit', venue, town, date, time, event, name, email };
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res.success) {
+        statusEl.className = 'form-status success';
+        statusEl.textContent = '\u2713 Thanks! Your submission is under review.';
+        // Clear the form
+        ['f-venue','f-town','f-date','f-time','f-event','f-name','f-email']
+          .forEach(id => document.getElementById(id).value = '');
+      } else {
+        throw new Error(res.error || 'Unknown error');
+      }
+    })
+    .catch(err => {
+      statusEl.className = 'form-status error';
+      statusEl.textContent = 'Something went wrong — please try again.';
+      console.error(err);
+    })
+    .finally(() => {
+      btnEl.disabled = false;
+    });
+  }
+
+  // ── Show More ─────────────────────────────────────────────────
   function expandWeeks() {
     weeksToShow = WEEKS_TOTAL;
     document.getElementById('show-more-wrap').style.display = 'none';
     if (cachedData) renderSchedule(cachedData);
   }
 
-  // ── Region toggles ───────────────────────────────────────────
+  // ── Region toggles ────────────────────────────────────────────
   function toggleRegion(id) {
     const l = document.getElementById('links-' + id);
     const a = document.getElementById('arrow-' + id);
@@ -196,7 +374,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     a.classList.toggle('open', !open);
   }
 
-  // ── Toolbar ──────────────────────────────────────────────────
+  // ── Toolbar ───────────────────────────────────────────────────
   function setSort(m) {
     currentSort = m;
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -210,7 +388,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     if (cachedData) renderSchedule(cachedData);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────────
   function getRange(weeks) {
     const now   = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -272,7 +450,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     );
   }
 
-  // ── Render: Sponsored (Tier 1) ───────────────────────────────
+  // ── Render: Sponsored ─────────────────────────────────────────
   function renderSponsored(featured) {
     const sp = (featured || []).filter(v =>
       String(v.Sponsored).toUpperCase() === 'TRUE' ||
@@ -290,7 +468,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     document.getElementById('sponsored-section').style.display = 'block';
   }
 
-  // ── Render: Venues by Region (Tier 2) ────────────────────────
+  // ── Render: Venues by Region ──────────────────────────────────
   function renderRegions(featured) {
     const grouped = {};
     (featured || []).forEach(v => {
@@ -329,11 +507,11 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   // ── Render: Schedule ─────────────────────────────────────────
   function renderSchedule(data) {
-    const range    = getRange(weeksToShow);
+    const range     = getRange(weeksToShow);
     const fullRange = getRange(WEEKS_TOTAL);
-    const todayKey = dkey(range[0]);
-    const WKND     = new Set(['Friday', 'Saturday', 'Sunday']);
-    const fr       = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
+    const todayKey  = dkey(range[0]);
+    const WKND      = new Set(['Friday', 'Saturday', 'Sunday']);
+    const fr        = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
 
     const vbd = {};
     (data.thisWeek || []).forEach(ev => {
@@ -379,7 +557,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
       total += evts.length;
 
-      // Week divider
       const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd) === k) / 7);
       if (weekNum !== lastWeekNum) {
         lastWeekNum = weekNum;
@@ -415,9 +592,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
         const town  = ev.Town  || '';
         const act   = ev.Event || '';
         div.innerHTML =
-          (time
-            ? '<span class="event-time">' + esc(time) + '</span>'
-            : '<span class="event-time"></span>') +
+          (time ? '<span class="event-time">' + esc(time) + '</span>' : '<span class="event-time"></span>') +
           '<span class="venue-name">' + hilite(venue, searchQuery.trim()) + '</span> ' +
           '<span class="town">' + esc(town) + '</span>' +
           (act ? ' &mdash; <span class="acts">' + hilite(act, searchQuery.trim()) + '</span>' : '');
@@ -427,7 +602,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       sEl.appendChild(sec);
     });
 
-    // Show More button — only when not searching and more weeks exist
     const showMoreWrap = document.getElementById('show-more-wrap');
     showMoreWrap.style.display = (!q && weeksToShow < WEEKS_TOTAL) ? 'block' : 'none';
 
@@ -442,7 +616,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     reportH();
   }
 
-  // ── Main render ──────────────────────────────────────────────
+  // ── Main render ───────────────────────────────────────────────
   function render(data) {
     cachedData = data;
     renderSponsored(data.featured);
@@ -450,15 +624,14 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     renderSchedule(data);
   }
 
-  // ── Search ───────────────────────────────────────────────────
+  // ── Search ────────────────────────────────────────────────────
   document.getElementById('search-input').addEventListener('input', function () {
     searchQuery = this.value;
-    // When searching, show all weeks so results aren't hidden
     weeksToShow = searchQuery.trim() ? WEEKS_TOTAL : WEEKS_DEFAULT;
     if (cachedData) renderSchedule(cachedData);
   });
 
-  // ── Height reporting for Joomla iframe ───────────────────────
+  // ── Height reporting ──────────────────────────────────────────
   function reportH() {
     try {
       const c = document.querySelector('.lc');
@@ -471,7 +644,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     } catch (e) {}
   }
 
-  // ── Load ─────────────────────────────────────────────────────
+  // ── Load ──────────────────────────────────────────────────────
   function loadListings() {
     fetch(API_URL)
       .then(r => r.json())
