@@ -29,6 +29,9 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .toggle-btn{padding:5px 12px;border:2px solid rgba(255,255,255,.6);background:transparent;border-radius:4px;font-size:.82em;font-weight:bold;cursor:pointer;transition:all .15s;white-space:nowrap;color:#fff;flex-shrink:0}
 .toggle-btn.active{background:#fff;border-color:#fff;color:#b8860b}
 .toggle-btn:hover:not(.active){background:rgba(255,255,255,.2);border-color:#fff}
+/* Submit button — slightly different so it stands out from filter controls */
+.submit-toolbar-btn{padding:5px 13px;border:2px solid #fff;background:#fff;border-radius:4px;font-size:.82em;font-weight:bold;cursor:pointer;transition:all .15s;white-space:nowrap;color:#b8860b;flex-shrink:0}
+.submit-toolbar-btn:hover{background:rgba(255,255,255,.85)}
 
 /* ── Tier 1: Sponsored (hidden until activated) ── */
 .sponsored-section{display:none;margin:14px 0 8px}
@@ -66,6 +69,11 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .town{text-transform:uppercase;font-size:.88em;color:#555}
 .acts{color:#333}
 
+/* ── Inline back-to-top ── */
+.day-footer{text-align:right;margin:6px 0 0;max-width:95%;margin-left:auto;margin-right:auto}
+.top-link{font-size:.75em;color:#ccc;text-decoration:none;cursor:pointer;transition:color .15s;border:none;background:none;padding:0;font-family:inherit}
+.top-link:hover{color:#b8860b}
+
 /* ── Show More ── */
 .show-more-wrap{text-align:center;margin:24px 0 8px}
 .show-more-btn{padding:8px 28px;background:#fff;border:2px solid #daa520;border-radius:4px;color:#b8860b;font-size:.88em;font-weight:bold;cursor:pointer;letter-spacing:.5px;transition:all .2s}
@@ -73,10 +81,9 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 
 /* ── Submission Form ── */
 .submit-section{margin:28px 0 0}
-.submit-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:10px 14px;background:#b8860b;border-radius:5px;transition:background .15s}
-.submit-toggle:hover{background:#a07010}
-.submit-toggle-label{font-size:.85em;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:#fff}
-.submit-arrow{font-size:.85em;color:#fff;transition:transform .25s;display:inline-block}
+.submit-section-title{display:flex;align-items:center;padding:8px 12px;background:#b8860b;border-radius:5px;margin-bottom:0;font-size:.82em;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:#fff;cursor:pointer;justify-content:space-between}
+.submit-section-title:hover{background:#a07010}
+.submit-arrow{font-size:.8em;color:#fff;transition:transform .25s;display:inline-block}
 .submit-arrow.open{transform:rotate(180deg)}
 .submit-body{display:none;padding:18px 4px 8px}
 .submit-body.open{display:block}
@@ -106,15 +113,6 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .status.error{color:#b00020}
 .footer-stamp{margin-top:20px;font-size:.75em;color:#999;text-align:center}
 mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
-
-/* ── Back to top ── */
-#btt{position:fixed;bottom:70px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:9999;font-weight:bold;transition:background .2s;line-height:1}
-#btt:hover{background:#b8860b}
-
-/* ── Sticky submit bar ── */
-#sticky-submit{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#222;color:#fff;text-align:center;padding:11px 16px;font-size:.88em;font-weight:bold;letter-spacing:.8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 -2px 8px rgba(0,0,0,.2);transition:background .2s}
-#sticky-submit:hover{background:#b8860b}
-body{padding-bottom:48px}
 
 @media(max-width:680px){
   .toolbar{flex-wrap:wrap}
@@ -149,6 +147,8 @@ body{padding-bottom:48px}
     </div>
     <div class="tdiv"></div>
     <button class="toggle-btn" id="weekend-toggle" onclick="toggleWeekend()">&#128197;&nbsp;This Weekend</button>
+    <div class="tdiv"></div>
+    <button class="submit-toolbar-btn" onclick="openSubmitForm()">&#43;&nbsp;Submit Event</button>
   </div>
 
   <hr>
@@ -178,10 +178,10 @@ body{padding-bottom:48px}
 
   <div class="no-results" id="no-results">No events match your search.</div>
 
-  <!-- ── Submit an Event ── -->
-  <div class="submit-section">
-    <div class="submit-toggle" onclick="toggleSubmit()">
-      <span class="submit-toggle-label">&#43;&nbsp; Submit an Event</span>
+  <!-- Submit an Event — triggered from toolbar button above -->
+  <div class="submit-section" id="submit-section">
+    <div class="submit-section-title" onclick="toggleSubmit()">
+      <span>&#43;&nbsp; Submit an Event</span>
       <span class="submit-arrow" id="submit-arrow">&#9660;</span>
     </div>
     <div class="submit-body" id="submit-body">
@@ -231,14 +231,6 @@ body{padding-bottom:48px}
 
 </div>
 
-<button id="btt" title="Back to top" onclick="scrollToTop()">&#8593;</button>
-
-<!-- Sticky submit bar — always visible at bottom of viewport -->
-<div id="sticky-submit" onclick="openSubmitForm()" title="Submit an event">
-  <span>&#43;</span>
-  <span>Submit an Event</span>
-</div>
-
 <script>
   // ── Configuration ─────────────────────────────────────────────
   const API_URL       = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
@@ -258,44 +250,43 @@ body{padding-bottom:48px}
   let weeksToShow = WEEKS_DEFAULT;
   let submitOpen  = false;
 
-  // ── Back to top (iframe-aware) ────────────────────────────────
+  // ── Scroll to top — iframe-aware ──────────────────────────────
   function scrollToTop() {
     try {
       if (window.parent && window.parent !== window) {
         window.parent.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
-    } catch (e) {}
+    } catch(e) {}
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }
 
-  // ── Open submit form from sticky bar ─────────────────────────
+  // ── Open submit form from toolbar ────────────────────────────
   function openSubmitForm() {
-    // Open the form if not already open
     if (!submitOpen) {
       submitOpen = true;
       document.getElementById('submit-body').classList.add('open');
       document.getElementById('submit-arrow').classList.add('open');
       reportH();
     }
-    // Scroll to the form — iframe-aware
+    // Scroll to form — iframe-aware
     setTimeout(() => {
-      const formEl = document.getElementById('submit-body');
-      if (!formEl) return;
-      const rect = formEl.getBoundingClientRect();
+      const el = document.getElementById('submit-section');
+      if (!el) return;
       try {
         if (window.parent && window.parent !== window) {
-          // Get iframe's offset within the parent page
-          const iframeEl = window.parent.document.querySelector('iframe');
-          const iframeTop = iframeEl ? iframeEl.getBoundingClientRect().top + window.parent.scrollY : 0;
+          const frames = window.parent.document.querySelectorAll('iframe');
+          let iframeTop = 0;
+          frames.forEach(f => { try { if (f.contentWindow === window) iframeTop = f.getBoundingClientRect().top + window.parent.scrollY; } catch(e){} });
+          const rect = el.getBoundingClientRect();
           window.parent.scrollTo({ top: iframeTop + rect.top - 20, behavior: 'smooth' });
           return;
         }
-      } catch (e) {}
-      formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 60);
+      } catch(e) {}
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
   }
 
   // ── Submit form toggle (header click) ────────────────────────
@@ -303,6 +294,7 @@ body{padding-bottom:48px}
     submitOpen = !submitOpen;
     document.getElementById('submit-body').classList.toggle('open', submitOpen);
     document.getElementById('submit-arrow').classList.toggle('open', submitOpen);
+    reportH();
   }
 
   // ── Submit event ──────────────────────────────────────────────
@@ -318,7 +310,6 @@ body{padding-bottom:48px}
     const statusEl = document.getElementById('form-status');
     const btnEl    = document.getElementById('submit-btn');
 
-    // Basic validation
     if (!venue || !town || !date || !event) {
       statusEl.className = 'form-status error';
       statusEl.textContent = 'Please fill in all required fields (*)';
@@ -329,33 +320,27 @@ body{padding-bottom:48px}
     statusEl.className = 'form-status';
     statusEl.textContent = 'Submitting\u2026';
 
-    const payload = { action: 'submit', venue, town, date, time, event, name, email };
-
     fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ action: 'submit', venue, town, date, time, event, name, email })
     })
     .then(r => r.json())
     .then(res => {
       if (res.success) {
         statusEl.className = 'form-status success';
         statusEl.textContent = '\u2713 Thanks! Your submission is under review.';
-        // Clear the form
         ['f-venue','f-town','f-date','f-time','f-event','f-name','f-email']
           .forEach(id => document.getElementById(id).value = '');
       } else {
         throw new Error(res.error || 'Unknown error');
       }
     })
-    .catch(err => {
+    .catch(() => {
       statusEl.className = 'form-status error';
       statusEl.textContent = 'Something went wrong — please try again.';
-      console.error(err);
     })
-    .finally(() => {
-      btnEl.disabled = false;
-    });
+    .finally(() => { btnEl.disabled = false; });
   }
 
   // ── Show More ─────────────────────────────────────────────────
@@ -398,110 +383,58 @@ body{padding-bottom:48px}
       return d;
     });
   }
-
-  function fmtDate(d) {
-    return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
-  }
-
-  function dkey(d) {
-    return d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0');
-  }
-
-  function pDate(v) {
-    if (!v) return null;
-    const d = new Date(v);
-    return isNaN(d) ? null : d;
-  }
-
+  function fmtDate(d) { return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
+  function dkey(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function pDate(v) { if (!v) return null; const d = new Date(v); return isNaN(d) ? null : d; }
   function esc(s) {
     if (s == null) return '';
-    return String(s)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
-
   function timeMins(s) {
     if (!s) return 9999;
-    s = String(s).trim().toLowerCase().replace(/\./g, '');
+    s = String(s).trim().toLowerCase().replace(/\./g,'');
     let m = s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
-    if (m) {
-      let h = +m[1], mn = +m[2];
-      if (m[3] === 'pm' && h < 12) h += 12;
-      if (m[3] === 'am' && h === 12) h = 0;
-      return h * 60 + mn;
-    }
+    if (m) { let h=+m[1],mn=+m[2]; if(m[3]==='pm'&&h<12)h+=12; if(m[3]==='am'&&h===12)h=0; return h*60+mn; }
     m = s.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/);
-    if (m) {
-      let h = +m[1], mn = m[2] ? +m[2] : 0;
-      if (m[3] === 'pm' && h < 12) h += 12;
-      if (m[3] === 'am' && h === 12) h = 0;
-      return h * 60 + mn;
-    }
+    if (m) { let h=+m[1],mn=m[2]?+m[2]:0; if(m[3]==='pm'&&h<12)h+=12; if(m[3]==='am'&&h===12)h=0; return h*60+mn; }
     return 9999;
   }
-
   function hilite(t, q) {
     if (!q) return esc(t);
-    return esc(t).replace(
-      new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
-      '<mark>$1</mark>'
-    );
+    return esc(t).replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');
   }
 
   // ── Render: Sponsored ─────────────────────────────────────────
   function renderSponsored(featured) {
-    const sp = (featured || []).filter(v =>
-      String(v.Sponsored).toUpperCase() === 'TRUE' ||
-      String(v.Sponsored).toLowerCase() === 'yes'
-    );
+    const sp = (featured||[]).filter(v => String(v.Sponsored).toUpperCase()==='TRUE' || String(v.Sponsored).toLowerCase()==='yes');
     if (!sp.length) return;
     const el = document.getElementById('sponsored-links');
     el.innerHTML = '';
-    sp.forEach(v => {
-      const a = document.createElement('a');
-      a.href = v.URL; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = v.Name;
-      el.appendChild(a);
-    });
+    sp.forEach(v => { const a=document.createElement('a'); a.href=v.URL; a.target='_blank'; a.rel='noopener'; a.textContent=v.Name; el.appendChild(a); });
     document.getElementById('sponsored-section').style.display = 'block';
   }
 
   // ── Render: Venues by Region ──────────────────────────────────
   function renderRegions(featured) {
     const grouped = {};
-    (featured || []).forEach(v => {
-      if (!v.Name || !v.URL) return;
-      const r = v.Region || 'Other';
-      if (!grouped[r]) grouped[r] = [];
-      grouped[r].push(v);
-    });
-    const order = [...REGION_ORDER.filter(r => grouped[r])];
+    (featured||[]).forEach(v => { if(!v.Name||!v.URL) return; const r=v.Region||'Other'; if(!grouped[r]) grouped[r]=[]; grouped[r].push(v); });
+    const order = [...REGION_ORDER.filter(r=>grouped[r])];
     if (grouped['Other']) order.push('Other');
-
     const container = document.getElementById('region-list');
     container.innerHTML = '';
-
     order.forEach((region, idx) => {
-      const id = 'r' + idx;
+      const id = 'r'+idx;
       const block = document.createElement('div');
       block.className = 'region-block';
       block.innerHTML =
-        '<div class="region-toggle" onclick="toggleRegion(\'' + id + '\')">' +
-          '<span class="region-name">' + esc(region) + '</span>' +
-          '<span class="region-arrow" id="arrow-' + id + '">&#9660;</span>' +
+        '<div class="region-toggle" onclick="toggleRegion(\''+id+'\')">' +
+          '<span class="region-name">'+esc(region)+'</span>' +
+          '<span class="region-arrow" id="arrow-'+id+'">&#9660;</span>' +
         '</div>' +
-        '<div class="region-links" id="links-' + id + '"></div>';
+        '<div class="region-links" id="links-'+id+'"></div>';
       container.appendChild(block);
-
-      const linksEl = document.getElementById('links-' + id);
-      grouped[region].forEach(v => {
-        const a = document.createElement('a');
-        a.href = v.URL; a.target = '_blank'; a.rel = 'noopener';
-        a.textContent = v.Name;
-        linksEl.appendChild(a);
-      });
+      const linksEl = document.getElementById('links-'+id);
+      grouped[region].forEach(v => { const a=document.createElement('a'); a.href=v.URL; a.target='_blank'; a.rel='noopener'; a.textContent=v.Name; linksEl.appendChild(a); });
     });
   }
 
@@ -510,23 +443,13 @@ body{padding-bottom:48px}
     const range     = getRange(weeksToShow);
     const fullRange = getRange(WEEKS_TOTAL);
     const todayKey  = dkey(range[0]);
-    const WKND      = new Set(['Friday', 'Saturday', 'Sunday']);
+    const WKND      = new Set(['Friday','Saturday','Sunday']);
     const fr        = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
 
     const vbd = {};
-    (data.thisWeek || []).forEach(ev => {
-      const d = pDate(ev.Date);
-      if (!d) return;
-      const k = dkey(d);
-      (vbd[k] = vbd[k] || []).push(ev);
-    });
-
+    (data.thisWeek||[]).forEach(ev => { const d=pDate(ev.Date); if(!d) return; const k=dkey(d); (vbd[k]=vbd[k]||[]).push(ev); });
     const rbd = {};
-    (data.recurring || []).forEach(ev => {
-      const day = String(ev.Day || '').trim();
-      if (!day) return;
-      (rbd[day] = rbd[day] || []).push(ev);
-    });
+    (data.recurring||[]).forEach(ev => { const day=String(ev.Day||'').trim(); if(!day) return; (rbd[day]=rbd[day]||[]).push(ev); });
 
     const sEl = document.getElementById('schedule');
     sEl.innerHTML = '';
@@ -535,38 +458,25 @@ body{padding-bottom:48px}
 
     fr.forEach(d => {
       const dn = DAYS[d.getDay()], k = dkey(d);
-      let evts = [].concat(rbd[dn] || []).concat(vbd[k] || []);
+      let evts = [].concat(rbd[dn]||[]).concat(vbd[k]||[]);
       if (!evts.length) return;
 
-      if (q) {
-        evts = evts.filter(ev =>
-          (ev.Venue || '').toLowerCase().includes(q) ||
-          (ev.Town  || '').toLowerCase().includes(q) ||
-          (ev.Event || '').toLowerCase().includes(q)
-        );
-      }
+      if (q) evts = evts.filter(ev => (ev.Venue||'').toLowerCase().includes(q)||(ev.Town||'').toLowerCase().includes(q)||(ev.Event||'').toLowerCase().includes(q));
       if (!evts.length) return;
 
-      if (currentSort === 'time') {
-        evts.sort((a, b) => timeMins(a.Time) - timeMins(b.Time));
-      } else {
-        evts.sort((a, b) =>
-          (a.Venue || '').toLowerCase().localeCompare((b.Venue || '').toLowerCase())
-        );
-      }
+      if (currentSort==='time') evts.sort((a,b) => timeMins(a.Time)-timeMins(b.Time));
+      else evts.sort((a,b) => (a.Venue||'').toLowerCase().localeCompare((b.Venue||'').toLowerCase()));
 
       total += evts.length;
 
-      const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd) === k) / 7);
+      // Week divider
+      const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd)===k) / 7);
       if (weekNum !== lastWeekNum) {
         lastWeekNum = weekNum;
         if (weekNum > 0) {
           const div = document.createElement('div');
           div.className = 'week-divider';
-          div.innerHTML =
-            '<div class="week-divider-line"></div>' +
-            '<div class="week-divider-label">Week ' + (weekNum + 1) + '</div>' +
-            '<div class="week-divider-line"></div>';
+          div.innerHTML = '<div class="week-divider-line"></div><div class="week-divider-label">Week '+(weekNum+1)+'</div><div class="week-divider-line"></div>';
           sEl.appendChild(div);
         }
       }
@@ -578,41 +488,38 @@ body{padding-bottom:48px}
       const hdr = document.createElement('div');
       hdr.className = 'day-header';
       hdr.innerHTML = fmtDate(d) +
-        (k === todayKey
-          ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>'
-          : '') +
-        ' <span class="day-count">' + evts.length + ' event' + (evts.length !== 1 ? 's' : '') + '</span>';
+        (k===todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
+        ' <span class="day-count">'+evts.length+' event'+(evts.length!==1?'s':'')+'</span>';
       sec.appendChild(hdr);
 
       evts.forEach(ev => {
         const div = document.createElement('div');
         div.className = 'event';
-        const time  = ev.Time  || '';
-        const venue = ev.Venue || '';
-        const town  = ev.Town  || '';
-        const act   = ev.Event || '';
+        const time=ev.Time||'', venue=ev.Venue||'', town=ev.Town||'', act=ev.Event||'';
         div.innerHTML =
-          (time ? '<span class="event-time">' + esc(time) + '</span>' : '<span class="event-time"></span>') +
-          '<span class="venue-name">' + hilite(venue, searchQuery.trim()) + '</span> ' +
-          '<span class="town">' + esc(town) + '</span>' +
-          (act ? ' &mdash; <span class="acts">' + hilite(act, searchQuery.trim()) + '</span>' : '');
+          (time ? '<span class="event-time">'+esc(time)+'</span>' : '<span class="event-time"></span>') +
+          '<span class="venue-name">'+hilite(venue, searchQuery.trim())+'</span> ' +
+          '<span class="town">'+esc(town)+'</span>' +
+          (act ? ' &mdash; <span class="acts">'+hilite(act, searchQuery.trim())+'</span>' : '');
         sec.appendChild(div);
       });
+
+      // Inline back-to-top after each day
+      const footer = document.createElement('div');
+      footer.className = 'day-footer';
+      footer.innerHTML = '<button class="top-link" onclick="scrollToTop()">&#8593; back to top</button>';
+      sec.appendChild(footer);
 
       sEl.appendChild(sec);
     });
 
     const showMoreWrap = document.getElementById('show-more-wrap');
     showMoreWrap.style.display = (!q && weeksToShow < WEEKS_TOTAL) ? 'block' : 'none';
-
-    document.getElementById('no-results').style.display = (q && total === 0) ? 'block' : 'none';
-    if (!q && total === 0)
-      sEl.innerHTML = '<div class="status">No events scheduled.</div>';
+    document.getElementById('no-results').style.display = (q && total===0) ? 'block' : 'none';
+    if (!q && total===0) sEl.innerHTML = '<div class="status">No events scheduled.</div>';
 
     const st = document.getElementById('stamp');
-    if (data.generatedAt)
-      st.textContent = 'Updated ' + new Date(data.generatedAt).toLocaleString();
-
+    if (data.generatedAt) st.textContent = 'Updated ' + new Date(data.generatedAt).toLocaleString();
     reportH();
   }
 
@@ -625,7 +532,7 @@ body{padding-bottom:48px}
   }
 
   // ── Search ────────────────────────────────────────────────────
-  document.getElementById('search-input').addEventListener('input', function () {
+  document.getElementById('search-input').addEventListener('input', function() {
     searchQuery = this.value;
     weeksToShow = searchQuery.trim() ? WEEKS_TOTAL : WEEKS_DEFAULT;
     if (cachedData) renderSchedule(cachedData);
@@ -637,33 +544,25 @@ body{padding-bottom:48px}
       const c = document.querySelector('.lc');
       if (!c) return;
       const h = Math.ceil(c.getBoundingClientRect().bottom + 20);
-      if (Math.abs(h - lastH) < 3) return;
+      if (Math.abs(h-lastH) < 3) return;
       lastH = h;
       if (window.parent && window.parent !== window)
         window.parent.postMessage({ type: 'club-listings-resize', height: h }, '*');
-    } catch (e) {}
+    } catch(e) {}
   }
 
   // ── Load ──────────────────────────────────────────────────────
   function loadListings() {
     fetch(API_URL)
       .then(r => r.json())
-      .then(data => {
-        if (data.error) throw new Error(data.error);
-        render(data);
-      })
+      .then(data => { if (data.error) throw new Error(data.error); render(data); })
       .catch(err => {
-        document.getElementById('schedule').innerHTML =
-          '<div class="status error">Unable to load listings: ' + esc(err.message) + '</div>';
+        document.getElementById('schedule').innerHTML = '<div class="status error">Unable to load listings: '+esc(err.message)+'</div>';
         reportH();
       });
   }
 
-  window.addEventListener('load', () => {
-    loadListings();
-    setTimeout(reportH, 300);
-    setTimeout(reportH, 800);
-  });
+  window.addEventListener('load', () => { loadListings(); setTimeout(reportH,300); setTimeout(reportH,800); });
 </script>
 </body>
 </html>
