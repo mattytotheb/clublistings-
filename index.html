@@ -37,18 +37,20 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .sponsored-links a{font-size:1.2em;font-weight:bold;color:#b8860b;text-decoration:none;line-height:1.9}
 .sponsored-links a:hover{text-decoration:underline;color:#daa520}
 
-/* ── Tier 2: Venues section ── */
+/* ── Tier 2: Venues — Option B: dominant headers, lighter venue links ── */
 .venues-section{margin:14px 0 6px}
-.venues-section-title{font-size:.8em;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;color:#b8860b;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e8d080}
+.venues-section-title{display:flex;align-items:center;padding:8px 12px;background:#fffbf0;border:1px solid #e0c860;border-radius:5px;margin-bottom:8px;font-size:.82em;font-weight:bold;letter-spacing:1.3px;text-transform:uppercase;color:#b8860b}
 .region-block{margin-bottom:5px}
-.region-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:5px 10px;border-left:3px solid #daa520;background:#fafafa;transition:background .15s}
+.region-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:6px 10px;border-left:3px solid #daa520;background:#fafafa;transition:background .15s}
 .region-toggle:hover{background:#fffbf0}
-.region-name{font-size:.78em;font-weight:bold;letter-spacing:1.1px;text-transform:uppercase;color:#b8860b}
-.region-arrow{font-size:.75em;color:#b8860b;transition:transform .2s;display:inline-block}
+/* Option B: bigger, more dominant region header */
+.region-name{font-size:1em;font-weight:bold;color:#b8860b;letter-spacing:.5px}
+.region-arrow{font-size:.8em;color:#b8860b;transition:transform .2s;display:inline-block}
 .region-arrow.open{transform:rotate(180deg)}
 .region-links{display:none;padding:4px 10px 6px 16px;column-count:2;column-gap:20px}
 .region-links.open{display:block}
-.region-links a{color:#666;text-decoration:none;font-size:.93em;font-weight:normal;display:block;line-height:1.9}
+/* Option B: lighter, smaller venue links — clearly subordinate */
+.region-links a{color:#444;text-decoration:none;font-size:.88em;font-weight:normal;display:block;line-height:1.9}
 .region-links a:hover{color:#b8860b;text-decoration:underline}
 
 /* ── Schedule ── */
@@ -65,14 +67,20 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .venue-name{font-weight:bold}
 .town{text-transform:uppercase;font-size:.88em;color:#555}
 .acts{color:#333}
+
+/* ── Show More button ── */
+.show-more-wrap{text-align:center;margin:24px 0 8px}
+.show-more-btn{padding:8px 28px;background:#fff;border:2px solid #daa520;border-radius:4px;color:#b8860b;font-size:.88em;font-weight:bold;cursor:pointer;letter-spacing:.5px;transition:all .2s}
+.show-more-btn:hover{background:#daa520;color:#fff}
+
 .no-results{text-align:center;color:#999;padding:20px;font-style:italic;display:none}
 .status{padding:30px;text-align:center;color:#777}
 .status.error{color:#b00020}
 .footer-stamp{margin-top:20px;font-size:.75em;color:#999;text-align:center}
 mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
-/* ── Back to top — always visible ── */
-#btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:999;font-weight:bold;text-decoration:none;transition:background .2s}
+/* ── Back to top ── */
+#btt{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:#daa520;color:#fff;border:none;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;z-index:9999;font-weight:bold;transition:background .2s;line-height:1}
 #btt:hover{background:#b8860b}
 
 @media(max-width:680px){
@@ -110,16 +118,16 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   <hr>
 
-  <!-- Tier 1: Sponsored Featured Venues
-       Hidden until activated. Add a "Sponsored" column to your Featured sheet
-       tab and set it to TRUE for paying clients — section appears automatically. -->
+  <!-- Tier 1: Sponsored — hidden until activated.
+       Add a "Sponsored" column to your Featured sheet tab,
+       set to TRUE for paying clients. Section appears automatically. -->
   <div class="sponsored-section" id="sponsored-section">
     <div class="sponsored-header">&#9733; Featured Venues</div>
     <div class="sponsored-links" id="sponsored-links"></div>
     <hr>
   </div>
 
-  <!-- Tier 2: Venues by Region — title is always visible, regions collapse individually -->
+  <!-- Tier 2: Venues by Region -->
   <div class="venues-section">
     <div class="venues-section-title">&#9834;&nbsp; Venues &amp; Clubs on Cape Cod</div>
     <div id="region-list"></div>
@@ -128,30 +136,58 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   <hr>
 
   <div id="schedule"></div>
+  <div id="show-more-wrap" class="show-more-wrap" style="display:none">
+    <button class="show-more-btn" onclick="expandWeeks()">&#9660;&nbsp; Show More Weeks</button>
+  </div>
   <div class="no-results" id="no-results">No events match your search.</div>
   <div id="stamp" class="footer-stamp"></div>
 
 </div>
 
-<a href="#top" id="btt" title="Back to top">&#8593;</a>
+<!-- Back to top — fixed, always visible, JS-powered for iframe compatibility -->
+<button id="btt" title="Back to top" onclick="scrollToTop()">&#8593;</button>
 
 <script>
   // ── Configuration ─────────────────────────────────────────────
-  const API_URL = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
-  const WEEKS = 4;
-  const REGION_ORDER = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
+  const API_URL      = 'https://script.google.com/macros/s/AKfycbxZuxWZE7bUMhP1EAg05I2tpm5qaGM1DxOSgZJqqaDHm-n_lDK_S_jFeWOcKJGweKYcNA/exec';
+  const WEEKS_DEFAULT = 2;   // weeks shown on load
+  const WEEKS_TOTAL   = 4;   // weeks shown after "Show More"
+  const REGION_ORDER  = ['Upper Cape', 'Mid-Cape', 'Lower Cape', 'Outer Cape'];
   // ─────────────────────────────────────────────────────────────
 
   const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  let currentSort = 'venue';
-  let weekendOnly = false;
-  let searchQuery = '';
-  let cachedData  = null;
-  let lastH       = 0;
+  let currentSort  = 'venue';
+  let weekendOnly  = false;
+  let searchQuery  = '';
+  let cachedData   = null;
+  let lastH        = 0;
+  let weeksToShow  = WEEKS_DEFAULT;
 
-  // ── Region toggles ────────────────────────────────────────────
+  // ── Back to top — works in both iframe and standalone ────────
+  function scrollToTop() {
+    // Try to scroll the parent page (Joomla iframe context)
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+    } catch (e) {}
+    // Fallback: scroll this document
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
+  // ── Show More ────────────────────────────────────────────────
+  function expandWeeks() {
+    weeksToShow = WEEKS_TOTAL;
+    document.getElementById('show-more-wrap').style.display = 'none';
+    if (cachedData) renderSchedule(cachedData);
+  }
+
+  // ── Region toggles ───────────────────────────────────────────
   function toggleRegion(id) {
     const l = document.getElementById('links-' + id);
     const a = document.getElementById('arrow-' + id);
@@ -160,7 +196,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     a.classList.toggle('open', !open);
   }
 
-  // ── Toolbar ───────────────────────────────────────────────────
+  // ── Toolbar ──────────────────────────────────────────────────
   function setSort(m) {
     currentSort = m;
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -174,11 +210,11 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     if (cachedData) renderSchedule(cachedData);
   }
 
-  // ── Helpers ───────────────────────────────────────────────────
-  function getRange() {
+  // ── Helpers ──────────────────────────────────────────────────
+  function getRange(weeks) {
     const now   = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    return Array.from({ length: WEEKS * 7 }, (_, i) => {
+    return Array.from({ length: weeks * 7 }, (_, i) => {
       const d = new Date(today);
       d.setDate(today.getDate() + i);
       return d;
@@ -236,7 +272,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     );
   }
 
-  // ── Render: Sponsored (Tier 1) ────────────────────────────────
+  // ── Render: Sponsored (Tier 1) ───────────────────────────────
   function renderSponsored(featured) {
     const sp = (featured || []).filter(v =>
       String(v.Sponsored).toUpperCase() === 'TRUE' ||
@@ -292,9 +328,9 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   }
 
   // ── Render: Schedule ─────────────────────────────────────────
-  // One row per sheet event — multiple acts at the same venue each get their own line.
   function renderSchedule(data) {
-    const range    = getRange();
+    const range    = getRange(weeksToShow);
+    const fullRange = getRange(WEEKS_TOTAL);
     const todayKey = dkey(range[0]);
     const WKND     = new Set(['Friday', 'Saturday', 'Sunday']);
     const fr       = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
@@ -321,12 +357,9 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
     fr.forEach(d => {
       const dn = DAYS[d.getDay()], k = dkey(d);
-
-      // All raw events for this day
       let evts = [].concat(rbd[dn] || []).concat(vbd[k] || []);
       if (!evts.length) return;
 
-      // Search filter
       if (q) {
         evts = evts.filter(ev =>
           (ev.Venue || '').toLowerCase().includes(q) ||
@@ -336,7 +369,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       }
       if (!evts.length) return;
 
-      // Sort
       if (currentSort === 'time') {
         evts.sort((a, b) => timeMins(a.Time) - timeMins(b.Time));
       } else {
@@ -348,7 +380,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       total += evts.length;
 
       // Week divider
-      const weekNum = Math.floor(range.indexOf(d) / 7);
+      const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd) === k) / 7);
       if (weekNum !== lastWeekNum) {
         lastWeekNum = weekNum;
         if (weekNum > 0) {
@@ -375,7 +407,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
         ' <span class="day-count">' + evts.length + ' event' + (evts.length !== 1 ? 's' : '') + '</span>';
       sec.appendChild(hdr);
 
-      // One row per event row from the sheet
       evts.forEach(ev => {
         const div = document.createElement('div');
         div.className = 'event';
@@ -384,7 +415,9 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
         const town  = ev.Town  || '';
         const act   = ev.Event || '';
         div.innerHTML =
-          (time ? '<span class="event-time">' + esc(time) + '</span>' : '<span class="event-time"></span>') +
+          (time
+            ? '<span class="event-time">' + esc(time) + '</span>'
+            : '<span class="event-time"></span>') +
           '<span class="venue-name">' + hilite(venue, searchQuery.trim()) + '</span> ' +
           '<span class="town">' + esc(town) + '</span>' +
           (act ? ' &mdash; <span class="acts">' + hilite(act, searchQuery.trim()) + '</span>' : '');
@@ -394,9 +427,13 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       sEl.appendChild(sec);
     });
 
+    // Show More button — only when not searching and more weeks exist
+    const showMoreWrap = document.getElementById('show-more-wrap');
+    showMoreWrap.style.display = (!q && weeksToShow < WEEKS_TOTAL) ? 'block' : 'none';
+
     document.getElementById('no-results').style.display = (q && total === 0) ? 'block' : 'none';
     if (!q && total === 0)
-      sEl.innerHTML = '<div class="status">No events scheduled for the next ' + WEEKS + ' weeks.</div>';
+      sEl.innerHTML = '<div class="status">No events scheduled.</div>';
 
     const st = document.getElementById('stamp');
     if (data.generatedAt)
@@ -405,7 +442,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     reportH();
   }
 
-  // ── Main render ───────────────────────────────────────────────
+  // ── Main render ──────────────────────────────────────────────
   function render(data) {
     cachedData = data;
     renderSponsored(data.featured);
@@ -413,9 +450,11 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     renderSchedule(data);
   }
 
-  // ── Search ────────────────────────────────────────────────────
+  // ── Search ───────────────────────────────────────────────────
   document.getElementById('search-input').addEventListener('input', function () {
     searchQuery = this.value;
+    // When searching, show all weeks so results aren't hidden
+    weeksToShow = searchQuery.trim() ? WEEKS_TOTAL : WEEKS_DEFAULT;
     if (cachedData) renderSchedule(cachedData);
   });
 
@@ -432,7 +471,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     } catch (e) {}
   }
 
-  // ── Load ──────────────────────────────────────────────────────
+  // ── Load ─────────────────────────────────────────────────────
   function loadListings() {
     fetch(API_URL)
       .then(r => r.json())
