@@ -468,16 +468,16 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       total += evts.length;
 
       // Week divider
-      const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd)===k) / 7);
-      if (weekNum !== lastWeekNum) {
-        lastWeekNum = weekNum;
-        if (weekNum > 0) {
-          const div = document.createElement('div');
-          div.className = 'week-divider';
-          div.innerHTML = '<div class="week-divider-line"></div><div class="week-divider-label">Week '+(weekNum+1)+'</div><div class="week-divider-line"></div>';
-          sEl.appendChild(div);
-        }
-      }
+     const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd)===k) / 7);
+if (weekNum !== lastWeekNum) {
+  lastWeekNum = weekNum;
+  if (weekNum > 0) {
+    const div = document.createElement('div');
+    div.className = 'week-divider';
+    div.innerHTML = '<div class="week-divider-line"></div><div class="week-divider-label">Week '+(weekNum+1)+'</div><div class="week-divider-line"></div>';
+    sEl.appendChild(div);
+  }
+}
 
       const sec = document.createElement('div');
       sec.className = 'day-section';
@@ -486,8 +486,8 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       const hdr = document.createElement('div');
       hdr.className = 'day-header';
       hdr.innerHTML = fmtDate(d) +
-        (k===todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
-        ' <span class="day-count">'+evts.length+' event'+(evts.length!==1?'s':'')+'</span>';
+  (k===todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
+  ' <span class="day-count">'+evts.length+' event'+(evts.length!==1?'s':'')+'</span>';
       sec.appendChild(hdr);
 
       evts.forEach(ev => {
