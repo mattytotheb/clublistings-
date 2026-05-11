@@ -29,11 +29,10 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 .toggle-btn{padding:5px 12px;border:2px solid rgba(255,255,255,.6);background:transparent;border-radius:4px;font-size:.82em;font-weight:bold;cursor:pointer;transition:all .15s;white-space:nowrap;color:#fff;flex-shrink:0}
 .toggle-btn.active{background:#fff;border-color:#fff;color:#b8860b}
 .toggle-btn:hover:not(.active){background:rgba(255,255,255,.2);border-color:#fff}
-/* Submit button — slightly different so it stands out from filter controls */
 .submit-toolbar-btn{padding:5px 13px;border:2px solid #fff;background:#fff;border-radius:4px;font-size:.82em;font-weight:bold;cursor:pointer;transition:all .15s;white-space:nowrap;color:#b8860b;flex-shrink:0}
 .submit-toolbar-btn:hover{background:rgba(255,255,255,.85)}
 
-/* ── Tier 1: Sponsored (hidden until activated) ── */
+/* ── Tier 1: Sponsored ── */
 .sponsored-section{display:none;margin:14px 0 8px}
 .sponsored-header{font-size:.75em;font-weight:bold;letter-spacing:1.8px;text-transform:uppercase;color:#b8860b;border-bottom:2px solid #daa520;padding-bottom:4px;margin-bottom:10px}
 .sponsored-links{display:flex;flex-wrap:wrap;gap:4px 32px}
@@ -56,11 +55,7 @@ hr{border:0;border-top:1px solid #ddd;margin:12px auto;width:80%}
 
 /* ── Schedule ── */
 .day-section{text-align:left;margin:20px auto 0;max-width:95%}
-.week-divider{display:flex;align-items:center;gap:12px;margin:28px 0 4px;max-width:95%;margin-left:auto;margin-right:auto}
-.week-divider-label{font-size:.75em;font-weight:bold;color:#b8860b;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;background:#fff;padding:0 8px}
-.week-divider-line{flex:1;height:1px;background:#daa520;opacity:.4}
 .day-header{color:#b8860b;font-size:1.15em;font-weight:bold;margin:14px 0 6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.day-count{font-size:.65em;font-weight:normal;color:#aaa;letter-spacing:.5px;text-transform:uppercase}
 .event{margin:3px 0;line-height:1.6;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;padding:4px 6px;border-bottom:1px solid #f5f5f5;transition:background .15s;border-radius:4px}
 .event:last-child{border-bottom:none}
 .event:hover{background:#fffbf0}
@@ -153,16 +148,13 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   <hr>
 
-  <!-- Tier 1: Sponsored — hidden until activated.
-       Add a "Sponsored" column to your Featured sheet tab,
-       set to TRUE for paying clients. Section appears automatically. -->
   <div class="sponsored-section" id="sponsored-section">
     <div class="sponsored-header">&#9733; Featured Venues</div>
     <div class="sponsored-links" id="sponsored-links"></div>
     <hr>
   </div>
 
-  <!-- Tier 2: Venues by Region -->
+  <!-- Venues by Region -->
   <div class="venues-section">
     <div class="venues-section-title">&#9834;&nbsp; Venues &amp; Clubs on Cape Cod</div>
     <div id="region-list"></div>
@@ -178,7 +170,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   <div class="no-results" id="no-results">No events match your search.</div>
 
-  <!-- Submit an Event — triggered from toolbar button above -->
+  <!-- Submit an Event -->
   <div class="submit-section" id="submit-section">
     <div class="submit-section-title" onclick="toggleSubmit()">
       <span>&#43;&nbsp; Submit an Event</span>
@@ -252,14 +244,16 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
   // ── Scroll to top — iframe-aware ──────────────────────────────
   function scrollToTop() {
-  try {
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'club-listings-scroll-top' }, '*');
-      return;
-    }
-  } catch(e) {}
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'club-listings-scroll-top' }, '*');
+        return;
+      }
+    } catch(e) {}
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
 
   // ── Open submit form from toolbar ────────────────────────────
   function openSubmitForm() {
@@ -269,7 +263,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
       document.getElementById('submit-arrow').classList.add('open');
       reportH();
     }
-    // Scroll to form — iframe-aware
     setTimeout(() => {
       const el = document.getElementById('submit-section');
       if (!el) return;
@@ -287,7 +280,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     }, 80);
   }
 
-  // ── Submit form toggle (header click) ────────────────────────
+  // ── Submit form toggle ────────────────────────────────────────
   function toggleSubmit() {
     submitOpen = !submitOpen;
     document.getElementById('submit-body').classList.toggle('open', submitOpen);
@@ -439,7 +432,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   // ── Render: Schedule ─────────────────────────────────────────
   function renderSchedule(data) {
     const range     = getRange(weeksToShow);
-    const fullRange = getRange(WEEKS_TOTAL);
     const todayKey  = dkey(range[0]);
     const WKND      = new Set(['Friday','Saturday','Sunday']);
     const fr        = weekendOnly ? range.filter(d => WKND.has(DAYS[d.getDay()])) : range;
@@ -452,7 +444,7 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
     const sEl = document.getElementById('schedule');
     sEl.innerHTML = '';
     const q = searchQuery.trim().toLowerCase();
-    let total = 0, lastWeekNum = -1;
+    let total = 0;
 
     fr.forEach(d => {
       const dn = DAYS[d.getDay()], k = dkey(d);
@@ -467,18 +459,6 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
 
       total += evts.length;
 
-      // Week divider
-     const weekNum = Math.floor(fullRange.findIndex(fd => dkey(fd)===k) / 7);
-if (weekNum !== lastWeekNum) {
-  lastWeekNum = weekNum;
-  if (weekNum > 0) {
-    const div = document.createElement('div');
-    div.className = 'week-divider';
-    div.innerHTML = '<div class="week-divider-line"></div><div class="week-divider-label">Week '+(weekNum+1)+'</div><div class="week-divider-line"></div>';
-    sEl.appendChild(div);
-  }
-}
-
       const sec = document.createElement('div');
       sec.className = 'day-section';
       sec.id = 'day-' + k;
@@ -486,8 +466,7 @@ if (weekNum !== lastWeekNum) {
       const hdr = document.createElement('div');
       hdr.className = 'day-header';
       hdr.innerHTML = fmtDate(d) +
-  (k===todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '') +
-  ' <span class="day-count">'+evts.length+' event'+(evts.length!==1?'s':'')+'</span>';
+        (k===todayKey ? ' <span style="font-size:.6em;color:#daa520;font-weight:normal;letter-spacing:1px">&#9679; TODAY</span>' : '');
       sec.appendChild(hdr);
 
       evts.forEach(ev => {
