@@ -376,7 +376,13 @@ mark{background:#fff3a3;color:inherit;border-radius:2px;padding:0 1px}
   }
   function fmtDate(d) { return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
   function dkey(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
-  function pDate(v) { if (!v) return null; const d = new Date(v); return isNaN(d) ? null : d; }
+  function pDate(v) {
+  if (!v) return null;
+  const parts = String(v).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (parts) return new Date(+parts[1], +parts[2] - 1, +parts[3]);
+  const d = new Date(v);
+  return isNaN(d) ? null : d;
+}
   function esc(s) {
     if (s == null) return '';
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
